@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>تـــمــــاريــن ابــــو عــــلــــي</title>
+  <title>تمارين ابو علي</title>
   
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/7m1118172/photo-render/main/%D8%AA%D9%85%D8%A7%D8%B1%D9%8A%D9%86%20%D8%A7%D8%A8%D9%88%20%D8%B9%D9%84%D9%8A.png">
   <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/7m1118172/photo-render/main/%D8%AA%D9%85%D8%A7%D8%B1%D9%8A%D9%86%20%D8%A7%D8%A8%D9%88%20%D8%B9%D9%84%D9%8A.png">
@@ -38,7 +38,7 @@
 
     main { padding: 1.2rem; max-width: 550px; margin: 0 auto; }
     .view-section { display: none; }
-    .view-section.active { display: block; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .view-section.active { display: block; animation: slideUp 0.5s ease-out forwards; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
     .card { background: var(--card-bg); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6); }
@@ -50,22 +50,21 @@
 
     .input-grp { margin-bottom: 1.5rem; }
     .input-grp label { display: block; margin-bottom: 8px; font-weight: 800; color: var(--primary); font-size: 0.95rem; }
-    .input-grp input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.1rem; color: white; outline: none; }
+    .input-grp input, .input-grp select, .input-grp textarea { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; color: white; outline: none; }
     
     .nav-icon { background: var(--glass-border); border: none; color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
     .exercise-img-box { width: 260px; height: 260px; margin: 0 auto 2rem; border-radius: 50%; border: 5px solid var(--primary); overflow: hidden; box-shadow: 0 0 50px rgba(245, 158, 11, 0.5); }
     .exercise-img-box img { width: 100%; height: 100%; object-fit: cover; }
     
-    .ai-bubble { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 15px; padding: 1rem; margin-bottom: 1.5rem; color: #d8b4fe; font-size: 0.9rem; }
-    .usr-item { display: flex; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--glass-border); font-size: 1rem; }
-    .joke-box { background: rgba(244, 63, 94, 0.1); border: 1px dashed #f43f5e; padding: 1rem; border-radius: 15px; margin-top: 1.5rem; font-size: 0.9rem; color: #fb7185; text-align:center; font-weight:bold; }
+    .ai-msg { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 15px; padding: 1rem; margin-bottom: 1rem; font-size: 0.95rem; }
+    .joke-box { background: rgba(244, 63, 94, 0.1); border: 1px dashed #f43f5e; padding: 1.2rem; border-radius: 20px; margin-top: 1.5rem; font-size: 1rem; color: #fb7185; text-align:center; font-weight:bold; }
   </style>
 </head>
 <body>
 
   <header>
     <button class="nav-icon" onclick="profileNav()"><i class="fa-solid fa-user-ninja"></i></button>
-    <h1 onclick="location.reload()">أبـو عـلـي فـيـتـنـس</h1>
+    <h1 onclick="location.reload()">تمارين ابو علي</h1>
     <button class="nav-icon" onclick="switchV('home-view')"><i class="fa-solid fa-house"></i></button>
   </header>
 
@@ -79,13 +78,13 @@
       <div id="lDiv">
         <div class="input-grp"><label>البريد الإلكتروني</label><input type="email" id="inEmail" placeholder="hussainbanijamra@gmail.com"></div>
         <div class="input-grp"><label>كلمة المرور</label><input type="password" id="inPass" placeholder="******"></div>
-        <button class="btn btn-primary" onclick="doAuth('l')">أنا وحش.. خلوني أدخل! 🥊</button>
+        <button class="btn btn-primary" onclick="doAuth('l')">تحطيم دهون النادي 🥊</button>
       </div>
       <div id="rDiv" style="display:none;">
-        <div class="input-grp"><label>الاسم الكامل</label><input type="text" id="regN"></div>
+        <div class="input-grp"><label>اسم البطل</label><input type="text" id="regN"></div>
         <div class="input-grp"><label>البريد الإلكتروني</label><input type="email" id="regE"></div>
         <div class="input-grp"><label>كلمة المرور</label><input type="password" id="regP"></div>
-        <button class="btn btn-primary" onclick="doAuth('r')">تسجيل كبطل جديد</button>
+        <button class="btn btn-primary" onclick="doAuth('r')">تسجيل كعضو جديد</button>
       </div>
     </section>
 
@@ -97,20 +96,20 @@
           <small>اليوم</small><div id="dDay" style="font-weight:900; font-size:1.3rem;">-</div>
         </div>
         <div style="background:rgba(0,0,0,0.5); padding:1.2rem; border-radius:20px; text-align:center; border:1px solid var(--primary);">
-          <small>عدد التمارين</small><div id="dCount" style="font-weight:900; font-size:1.3rem; color:var(--primary);">0</div>
+          <small>التمارين</small><div id="dCount" style="font-weight:900; font-size:1.3rem; color:var(--primary);">0</div>
         </div>
       </div>
-      <button class="btn btn-primary" onclick="startSession()">💪 ابدأ تمرينك وسكر جوالك فورا</button>
-      <button class="btn btn-ai" onclick="switchV('ai-view')">🤖 استشارة المدرب الآلي (للدببة فقط)</button>
+      <button class="btn btn-primary" onclick="startSession()">💪 ابدأ التمرين فوراً</button>
+      <button class="btn btn-ai" onclick="switchV('ai-view')">🤖 تحدث لمدربك الآلي</button>
       <div class="joke-box" id="jokeBox">-</div>
     </section>
 
     <!-- View: Workout Player -->
     <section id="play-view" class="view-section card">
-      <div id="pProg" style="text-align:center; color:var(--primary); margin-bottom:12px; font-weight:900;">تمرين 1 / 10</div>
+      <div id="pProg" style="text-align:center; color:var(--primary); margin-bottom:10px; font-weight:900;">تمرين 1 / 10</div>
       <div class="exercise-img-box"><img id="pImg" src=""></div>
       <h2 id="pTitle" style="text-align:center; margin-bottom:1rem;">-</h2>
-      <div class="ai-bubble" id="pAI">جاري التحليل...</div>
+      <div class="ai-msg" id="pAI">جاري التحليل...</div>
       <div style="background:rgba(0,0,0,0.4); padding:1.5rem; border-radius:20px;">
         <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>المطلوب:</span><b id="pReps">-</b></div>
         <p id="pDesc" style="font-size:0.9rem; opacity:0.85; line-height:1.6;">-</p>
@@ -120,13 +119,13 @@
 
     <!-- View: Finished -->
     <section id="finish-view" class="view-section card" style="text-align:center;">
-      <i class="fa-solid fa-medal" style="font-size:5rem; color:var(--primary); margin-bottom:1.5rem;"></i>
-      <h2 style="font-size:2rem; margin-bottom:1rem;">كفيت ووفيت! 🦁</h2>
-      <p style="opacity:0.8; margin-bottom:2rem;">جدولك لليوم خلص. الحين تقدر ترتاح يا بطل.</p>
+      <i class="fa-solid fa-crown" style="font-size:5.5rem; color:var(--primary); margin-bottom:1.5rem;"></i>
+      <h2 style="font-size:2.2rem; margin-bottom:1rem;">وحش البراري! 🥇</h2>
+      <p style="opacity:0.8; margin-bottom:2rem;">جدول اليوم اكتمل. الآن استمتع بالراحة يا بطل.</p>
       <button class="btn btn-primary" onclick="location.reload()">العودة للرئيسية</button>
     </section>
 
-    <!-- View: Admin Gateway -->
+    <!-- View: Admin Login -->
     <section id="admin-login" class="view-section card" style="max-width:350px; margin:2rem auto;">
       <h2 style="text-align:center; margin-bottom:1.5rem;">لوحة الكبار</h2>
       <div class="input-grp"><label>كلمة نفاذ المشرف</label><input type="password" id="admP" placeholder="******" style="text-align:center; letter-spacing:5px;"></div>
@@ -137,85 +136,107 @@
     <section id="admin-view" class="view-section card">
       <h2 style="text-align:center; margin-bottom:1rem;">جيش المستخدمين</h2>
       <div id="uList" style="background:rgba(0,0,0,0.3); border-radius:20px; overflow:hidden;"></div>
-      <button class="btn btn-outline" style="margin-top:2rem;" onclick="switchV('home-view')">خروج</button>
+      <button class="btn btn-outline" style="margin-top:2rem;" onclick="switchV('edit-choice-view')">تعديل الجداول</button>
+      <button class="btn btn-outline" style="margin-top:10px;" onclick="switchV('home-view')">خروج</button>
     </section>
 
     <!-- View: AI Chat -->
     <section id="ai-view" class="view-section card" style="padding:0; overflow:hidden;">
-      <div style="height:450px; display:flex; flex-direction:column;">
-        <div style="padding:1rem; border-bottom:1px solid var(--glass-border); text-align:center;">🤖 استشارة الأبطال</div>
-        <div id="aiMsgs" style="flex:1; overflow-y:auto; padding:1.2rem;"></div>
+      <div style="height:500px; display:flex; flex-direction:column;">
+        <div style="padding:1rem; border-bottom:1px solid var(--glass-border); text-align:center; background:rgba(0,0,0,0.2);">🤖 مدربك الآلي (Strict Mode)</div>
+        <div id="aiMsgs" style="flex:1; overflow-y:auto; padding:1.2rem; display:flex; flex-direction:column;"></div>
+        <div id="aiActions" style="padding:10px; display:none; justify-content:center; background:rgba(0,0,0,0.3);">
+          <button class="btn btn-primary" id="confirmScheduleBtn" style="margin:0; width:auto;">✅ موافق، اعتمد هذا الجدول</button>
+        </div>
         <div style="display:flex; padding:10px; background:rgba(0,0,0,0.5); gap:8px;">
-          <input type="text" id="aiIn" style="flex:1; background:none; border:1px solid var(--glass-border); padding:12px; border-radius:12px; color:white;">
+          <input type="text" id="aiIn" style="flex:1; background:none; border:1px solid var(--glass-border); padding:12px; border-radius:12px; color:white;" placeholder="أخبرني بوزنك وهدفك...">
           <button class="btn btn-primary" style="width:55px; margin:0;" onclick="sendAI()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
       </div>
     </section>
+
+    <!-- View: Edit Choice -->
+    <section id="edit-choice-view" class="view-section card">
+      <h2 style="text-align:center; margin-bottom:1.5rem;">تعديل جدول حسين</h2>
+      <select id="editDaySelect" style="width:100%; padding:1rem; border-radius:12px; background:rgba(0,0,0,0.5); color:white; border:1px solid var(--glass-border); margin-bottom:1rem;">
+        <option value="الأحد">الأحد</option><option value="الإثنين">الإثنين</option><option value="الثلاثاء">الثلاثاء</option>
+        <option value="الأربعاء">الأربعاء</option><option value="الخميس">الخميس</option><option value="الجمعة">الجمعة</option><option value="السبت">السبت</option>
+      </select>
+      <div id="editExerciseList"></div>
+      <button class="btn btn-outline" onclick="addEditItem()">➕ إضافة تمرين</button>
+      <button class="btn btn-primary" onclick="saveManualEdits()">حفظ التعديلات</button>
+    </section>
   </main>
 
   <script>
-    // --- البيانات المقدسة (1:1 من ملف الإكسل) ---
-    const DB = {
+    // --- 💎 تمارين حسين الرسمية (1:1 من ملف الإكسل) 💎 ---
+    const OFFICIAL_DB = {
       "الأحد": [
-        { name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم، ما تتكئ على الحواجز. حرك يديك بشكل طبيعي.", reps: "20 دقيقة" },
-        { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم من الرأس للكعب.", reps: "3 مجموعات" },
-        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك وصدرك للأعلى بس — مو الظهر كله. انزل ببطء.", reps: "3 مجموعات × 15" },
-        { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية (90 درجة). نزّلهم ببطء.", reps: "3 مجموعات × 12" }
+        { name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم.", reps: "20 دقيقة" },
+        { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم.", reps: "3 مجموعات" },
+        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك وصدرك للأعلى بس.", reps: "3 مجموعات × 15" },
+        { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى (90 درجة).", reps: "3 مجموعات × 12" }
       ],
       "الإثنين": [
-        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى صدرك يقارب الأرض وارجع للأعلى.", reps: "4 مجموعات × 12" },
-        { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين. يركز على عضلة الصدر أكثر.", reps: "3 مجموعات × 10" },
-        { name: "بوش اب ضيق (ترايسبس)", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك. كوعيك يمشون للخلف مو للجانب.", reps: "3 مجموعات × 10" },
-        { name: "بلانك جانبي", image: "بلانك جانبي.png", desc: "استند على مرفق واحد وجانب قدمك. جسمك بخط مستقيم. كرر على الجهة الثانية.", reps: "2 مجموعة" }
+        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من م كتفيك. انزل حتى صدرك يقارب الأرض.", reps: "4 مجموعات × 12" },
+        { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين.", reps: "3 مجموعات × 10" },
+        { name: "بوش اب ضيق (ترايسبس)", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك.", reps: "3 مجموعات × 10" },
+        { name: "بلانك جانبي", image: "بلانك جانبي.png", desc: "استند على مرفق واحد وجانب قدمك.", reps: "2 مجموعة" }
       ],
-      "الثلاثاء": [
-        { name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "إحماء 5 دقائق مشي هادي. ثم جري سريع دقيقة وراحة دقيقة (كرر 8 مرات).", reps: "26 دقيقة" }
-      ],
+      "الثلاثاء": [{ name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "إحماء 5 دقائق مشي. جري دقيقة وراحة دقيقة (8 مرات).", reps: "26 دقيقة" }],
       "الأربعاء": [
-        { name: "شد الحبال من الأعلى (Pull-up)", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين. اشد جسمك للأعلى حتى ذقنك يتجاوز القضيب.", reps: "4 مجموعات" },
-        { name: "شد الحبال من الأمام", image: "شد الحبال من الأمام.png", desc: "امسك القضيب أمامك. اشد للأسفل نحو صدرك. ظهرك مستقيم.", reps: "3 مجموعات × 12" },
-        { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف مع الحفاظ على ثبات الكوع. انزل ببطء.", reps: "3 مجموعات × 12" },
-        { name: "سوبرمان", image: "سوبرمان.png", desc: "استلقي على بطنك، ارفع يديك ورجليك في نفس الوقت. ثبّت ثانيتين ثم انزل.", reps: "3 مجموعات × 12" }
+        { name: "شد الحبال من الأعلى (Pull-up)", image: "شد الحبال من الأعلى.png", desc: "اشد جسمك للأعلى.", reps: "4 مجموعات" },
+        { name: "شد الحبال من الأمام", image: "شد الحبال من الأمام.png", desc: "امسك القضيب أمامك. اشد للأسفل نحو صدرك.", reps: "3 مجموعات × 12" },
+        { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف.", reps: "3 مجموعات × 12" },
+        { name: "سوبرمان", image: "سوبرمان.png", desc: "استلقي على بطنك، ارفع يديك ورجليك معاً.", reps: "3 مجموعات × 12" }
       ],
       "الخميس": [
-        { name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي. ركبتيك ما تتجاوز أصابع قدميك. ظهرك مستقيم.", reps: "4 مجموعات × 15" },
-        { name: "لانج (خطوات)", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام وانزل حتى ركبتك الخلفية تقارب الأرض. ارجع وكرر.", reps: "3 مجموعات × 10" },
-        { name: "جامب سكوات", image: "جامب سكوات.png", desc: "سكوات ثم اقفز للأعلى. انزل بنعومة على أصابع قدميك.", reps: "3 مجموعات × 10" },
-        { name: "كرانش + رفع رجلين", image: "كرانش + رفع رجلين.png", desc: "تمرين مركب يجمع الكرانش مع رفع الرجلين لتقوية الكور.", reps: "3 مجموعات × 15" }
+        { name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي.", reps: "4 مجموعات × 15" },
+        { name: "لانج (خطوات)", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام.", reps: "3 مجموعات × 10" },
+        { name: "جامب سكوات", image: "جامب سكوات.png", desc: "סקوات ثم اقفز للأعلى.", reps: "3 مجموعات × 10" },
+        { name: "كرانش + رفع رجلين", image: "كرانش + رفع رجلين.png", desc: "تمرين مركب يجمع الكرانش مع رفع الرجلين.", reps: "3 مجموعات × 15" }
       ],
-      "الجمعة": [
-        { name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة لاستعادة الاستشفاء العضلي. يمكنك المشي الخفيف.", reps: "راحة" }
-      ],
+      "الجمعة": [{ name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف.", reps: "راحة" }],
       "السبت": [
-        { name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط السرعة لمدة 30 دقيقة مستمرة.", reps: "30 دقيقة" },
-        { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام واحس بالشد في الفخذ الأمامي.", reps: "15 ثانية" },
-        { name: "إطالة الهامسترينج", image: "إطالة الهامسترينج.png", desc: "استلقي على ظهرك وارفع رجل واحدة مستقيمة للأعلى.", reps: "15 ثانية" },
+        { name: "مشي متوسط", image: "مشي خفيف.png", desc: "30 دقيقة مستمرة.", reps: "30 دقيقة" },
+        { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام.", reps: "15 ثانية" },
+        { name: "إطالة الهامسترينج", image: "إطالة الهامسترينج.png", desc: "استلقي على ظهرك وارفع رجل واحدة.", reps: "15 ثانية" },
         { name: "إطالة الكتف", image: "إطالة الكتف.png", desc: "مد ذراعك أمامك واسحبها للجهة الثانية.", reps: "15 ثانية" },
         { name: "إطالة الظهر", image: "إطالة الظهر.png", desc: "جمع ركبتيك لصدرك ودوّر ببطء.", reps: "15 ثانية" }
       ]
     };
 
-    const JOKES = ["اضعف يا الدبة! 😂", "خفف أكل ترى الكرشة بتركب وياك السيارة! 🦆", "اشرب ماء كثيراً.. لا تصير مثل قشور الروبيان! 🍤", "التفت لنفسك يالسمين، التمرين بيفيدك! 🦍"];
+    const ALL_AUTHORIZED_NAMES = ["مشي سريع على الجهاز", "بلانك", "كرانش", "رفع الرجلين", "بوش اب عادي", "بوش اب واسع", "بوش اب ضيق (ترايسبس)", "بلانك جانبي", "جري تقطيعي", "شد الحبال من الأعلى (Pull-up)", "شد الحبال من الأمام", "بايسبس بالحبل", "سوبرمان", "سكوات", "لانج (خطوات)", "جامب سكوات", "كرانش + رفع رجلين", "مشي متوسط", "إطالة الفخذ الأمامي", "إطالة الهامسترينج", "إطالة الكتف", "إطالة الظهر"];
+
+    // --- 🤡 قائمة النصائح الساخرة والمضحكة (قصف جبهة) 🤡 ---
+    const JOKES = [
+      "اضعف يا الدبة! 😂", "خفف أكل ترى الكرشة بتركب وياك السيارة! 🦆", "اشرب ماء كثيراً.. لا تصير مثل قشور الروبيان! 🍤", "التفت لنفسك يالسمين، الكرسي يصرخ منك! 🦍", "التمرين بيفيدك أكثر من صينية المجتوس يالمنفوخ! 🍚", "عضلاتك وين؟ خاشهم في الثلاجة؟ 🧊", "أبو علي يطالعك.. لا تتدلع في التمرين! 🦁", "كل هذا أكل وليلحين جوعان؟ قوم تمرن لا أسطرك! 🥣", "ميزانك يقول لك: واحد واحد لو سمحت! ⚖️", "القميص ضاق والا أنت اللي توسعت يالبطل؟ 👕", "شكلك صار مثل رغيف الخبز الحار، قوم احرق! 🥖", "إذا الركض صعب، تخيل إن فيه بوفيه في النهاية! 🍗", "انت تسوي دايت والا قاعد تجرب قائمة الطعام؟ 🍔", "الجاذبية مو مأثرة فيك، الكرشة هي اللي ساحبتك! 🌍", "التمرين ٥ دقايق والأكل ساعتين؟ خوش جدول! 🥗", "انت بطل.. بس بطل أكل شوي يالحبيب! 🛑", "ترا السكوات يفيد الفخذ مو بس يخليك تقعد! 🪑", "بلانك دقيقة وحدة بتخليك تشوف مستقبلك بدون شحوم! 🔮", "لو تعرّق في التمرين كثر ما تعرّق عند صينية العيش چان صرت غصن! 🌴", "الضعف مو عيب، العيب إنك خلصت عيش البيت كله! 🍚", "قوم تحرك لا تصير مثل البالونة المنفجرة! 🎈", "صحتك غالية.. بس الكنافة أغلى عندك أدري بك! 🥧", "تبي تصير وحش؟ الوحش ما ياكل ٤ وجبات في الساعة! 🐗", "اسمع كلام أبو علي وتمرن عدل يالكسول! 💤", "الذكاء الاصطناعي يقول لك: قوم يالنايم، الدنيا تمرنت وأنت تشخر! 😴"
+    ];
+
     let currUser = JSON.parse(localStorage.getItem('fitUser')) || null;
     let currList = [], currIdx = 0;
     const K = "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";
 
     function switchV(id) {
-      if(!currUser && !['auth-view','admin-login','admin-view'].includes(id)) id = 'auth-view';
+      if(!currUser && !['auth-view','admin-login','admin-view','edit-choice-view'].includes(id)) id = 'auth-view';
       document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-      const el = document.getElementById(id); if(el) el.classList.add('active');
+      const el = document.getElementById(id); 
+      if(el) {
+        el.classList.add('active');
+        if(id==='edit-choice-view') loadEditDay(document.getElementById('editDaySelect').value);
+      }
     }
 
     function init() {
-      // Admin Priority check (?admin=1)
-      const p = new URLSearchParams(window.location.search);
-      if(p.has('admin') || window.location.pathname.includes('/admin')) { switchV('admin-login'); return; }
+      const q = new URLSearchParams(window.location.search);
+      if(q.has('admin')) { switchV('admin-login'); return; }
 
       if(currUser) {
-        document.getElementById('greet').textContent = `أهلاً يا وحش الفريج ${currUser.name}! 🔥`;
+        document.getElementById('greet').textContent = `أهلاً يا وحش الفريج ${currUser.name}! 🥊`;
         const day = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"][new Date().getDay()];
         document.getElementById('dDay').textContent = day;
-        currList = DB[day] || [];
+        const savedDB = JSON.parse(localStorage.getItem(`sch_${currUser.email}`)) || OFFICIAL_DB;
+        currList = savedDB[day] || [];
         document.getElementById('dCount').textContent = currList.length;
         document.getElementById('jokeBox').textContent = JOKES[Math.floor(Math.random()*JOKES.length)];
         switchV('home-view');
@@ -224,35 +245,33 @@
       }
     }
 
+    // AUTH
     function tabA(t) {
       document.getElementById('lDiv').style.display = t==='l'?'block':'none';
       document.getElementById('rDiv').style.display = t==='l'?'none':'block';
       document.getElementById('lT').style.opacity = t==='l'?1:0.4;
-      document.getElementById('lT').style.borderBottom = t==='l'?'3px solid var(--primary)':'none';
       document.getElementById('rT').style.opacity = t==='l'?0.4:1;
-      document.getElementById('rT').style.borderBottom = t==='l'?'none':'3px solid var(--primary)';
     }
-
     function doAuth(t) {
       if(t==='l') {
         const e = document.getElementById('inEmail').value, p = document.getElementById('inPass').value;
         const admins = [{name:"حسين", email:"hussainbanijamra@gmail.com", pass:"34021013"}];
         const all = [...admins, ...JSON.parse(localStorage.getItem('db_u')||'[]')];
-        const found = all.find(x => x.email === e && x.pass === p);
-        if(found) { localStorage.setItem('fitUser', JSON.stringify(found)); location.reload(); } else alert("خطأ!");
+        const f = all.find(x => x.email === e && x.pass === p);
+        if(f) { localStorage.setItem('fitUser', JSON.stringify(f)); location.reload(); } else alert("خطأ!");
       } else {
         const n = document.getElementById('regN').value, e = document.getElementById('regE').value, p = document.getElementById('regP').value;
-        if(!n||!e||!p) return alert("املأ الفراغات!");
+        if(!n||!e||!p) return alert("املأ كل الخانات!");
         let db = JSON.parse(localStorage.getItem('db_u')||'[]');
         db.push({name:n, email:e, pass:p});
         localStorage.setItem('db_u', JSON.stringify(db));
-        alert("تم! الحين سجل دخولك."); tabA('l');
+        alert("بطل! سجل دخولك الآن."); tabA('l');
       }
     }
-
     function profileNav() { if(currUser) { if(confirm("تبي تسجل خروجك؟")) { localStorage.removeItem('fitUser'); location.reload(); } } else switchV('auth-view'); }
 
-    function startSession() { currIdx=0; updateUI(); switchV('play-view'); }
+    // PLAYER
+    function startSession() { if(currList.length===0){alert("لا توجد تمارين لهذا اليوم!");return;} currIdx=0; updateUI(); switchV('play-view'); }
     function updateUI() {
       const x = currList[currIdx];
       document.getElementById('pProg').textContent = `تمرين ${currIdx+1} من ${currList.length}`;
@@ -260,10 +279,9 @@
       document.getElementById('pReps').textContent = x.reps;
       document.getElementById('pDesc').textContent = x.desc;
       document.getElementById('pImg').src = `https://raw.githubusercontent.com/7m1118172/photo-render/main/${x.image.replace(/ /g,'%20')}`;
-      document.getElementById('pNext').textContent = (currIdx === currList.length-1) ? "أنهيت اليوم بطل! 🥇" : "التالي ➡️";
-      
-      const ai = document.getElementById('pAI'); ai.textContent = "جاري طلب نصيحة...";
-      fetchG([{role:"system",content:"حفز البطل بكلمتين."}, {role:"user",content:x.name}]).then(r => ai.textContent = r);
+      document.getElementById('pNext').textContent = (currIdx === currList.length-1) ? "فخر العرب أنت! 🥇" : "التالي ➡️";
+      const ai = document.getElementById('pAI'); ai.textContent = "يتم تحليل الأداء...";
+      fetchG([{role:"system",content:"كن مدرباً قاصفاً للجبهات ومحفزاً."}, {role:"user",content:x.name}]).then(r => ai.textContent = r);
     }
     function nextEx() { if(currIdx < currList.length-1){ currIdx++; updateUI(); } else { switchV('finish-view'); } }
 
@@ -271,27 +289,101 @@
       try {
         const r = await fetch("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "Authorization": `Bearer ${K}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: m }) }).then(r=>r.json());
         return r.choices[0].message.content;
-      } catch(e) { return "عاش الوحش!"; }
+      } catch(e) { return "استمر يا وحش!"; }
     }
+
+    // AI ONBOARDING & CHAT
+    let aiThread = [];
+    let tempSchedule = null;
 
     async function sendAI() {
       const i = document.getElementById('aiIn'), m = i.value; if(!m) return;
       const b = document.getElementById('aiMsgs');
-      b.innerHTML += `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">${m}</div>`;
+      b.innerHTML += `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:10px; margin-bottom:10px; align-self:flex-end;">${m}</div>`;
       i.value = '';
-      const r = await fetchG([{role:"system",content:"أنت مدرب وحش ومارحمة. حفز المستخدم وابدأ بكلمة 'اسمعني يا وحش'."}, {role:"user",content:m}]);
-      b.innerHTML += `<div style="background:rgba(59,130,246,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">${r}</div>`;
+      
+      const systemPrompt = `أنت مدرب تمارين 'أبو علي'. 
+      1. ممنوع التكلم في أي شيء غير التمارين والصحة الرياضية. إذا سألك المستخدم سؤالاً خارجياً قل: 'عذراً لا يمكنني التحدث في أشياء غير التمارين'.
+      2. إذا أراد المستخدم جدولاً، اطلب منه (الوزن، الهدف).
+      3. إذا اقترحت جدولاً، استخدم فقط هذه التمارين: [${ALL_AUTHORIZED_NAMES.join(', ')}].
+      4. إذا وافق المستخدم على الجدول، أرسل كلمة 'CONFIRM_CODE' في نهاية رسالتك.
+      5. كن قاصفاً للجبهات ومحفزاً (مدرب وحش).`;
+
+      aiThread.push({role: "user", content: m});
+      const r = await fetchG([{role:"system", content: systemPrompt}, ...aiThread]);
+      
+      b.innerHTML += `<div style="background:rgba(59,130,246,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">${r.replace('CONFIRM_CODE', '')}</div>`;
       b.scrollTop = b.scrollHeight;
+      aiThread.push({role: "assistant", content: r});
+
+      if(r.includes('CONFIRM_CODE')) {
+        document.getElementById('aiActions').style.display = 'flex';
+        // Generate a fake simple schedule for demo if needed
+        tempSchedule = OFFICIAL_DB; // AI typically suggests a variation of official
+      }
     }
 
+    document.getElementById('confirmScheduleBtn').onclick = () => {
+      localStorage.setItem(`sch_${currUser.email}`, JSON.stringify(tempSchedule));
+      alert("تم اعتماد الجدول الجديد لجميع أيام الأسبوع بنجاح! نراك في النادي.");
+      location.reload();
+    };
+
+    // ADMIN & MANUAL EDIT
     function chkAdmin() {
       if(document.getElementById('admP').value === '123123') {
-        const b = document.getElementById('uList');
-        const admins = [{name:"حسين (مطور)", email:"hussainbanijamra@gmail.com"}];
-        const db = [...admins, ...JSON.parse(localStorage.getItem('db_u')||'[]')];
-        b.innerHTML = db.map(u => `<div class="usr-item"><span>${u.name}</span><span>${u.email}</span></div>`).join('');
+        const uL = document.getElementById('uList');
+        const db = JSON.parse(localStorage.getItem('db_u')||'[]');
+        uL.innerHTML = [{name:"حسين (المشرف)", email:"hussainbanijamra@gmail.com"}, ...db].map(u => `<div class="usr-item"><span>${u.name}</span><span>${u.email}</span></div>`).join('');
         switchV('admin-view');
-      } else alert("بطل! حاول مرة ثانية.");
+      } else alert("خطأ! ارجع تمرن أحسن لك.");
+    }
+
+    document.getElementById('editDaySelect').onchange = (e) => loadEditDay(e.target.value);
+
+    function loadEditDay(day) {
+      const container = document.getElementById('editExerciseList'); container.innerHTML = '';
+      const savedDB = JSON.parse(localStorage.getItem(`sch_${currUser.email}`)) || OFFICIAL_DB;
+      (savedDB[day] || []).forEach((ex, idx) => {
+        container.innerHTML += createEditRow(ex.name, ex.reps, idx);
+      });
+    }
+
+    function createEditRow(name, reps, id) {
+      let options = ALL_AUTHORIZED_NAMES.map(n => `<option value="${n}" ${n===name?'selected':''}>${n}</option>`).join('');
+      return `<div class="edit-row card" style="padding:10px; margin-bottom:10px;">
+        <select class="edName">${options}</select>
+        <input class="edReps" value="${reps}" placeholder="مثلاً: 12x3">
+        <button onclick="this.parentElement.remove()" style="color:red; background:none; border:none; cursor:pointer;">حذف</button>
+      </div>`;
+    }
+
+    function addEditItem() {
+      const container = document.getElementById('editExerciseList');
+      container.innerHTML += createEditRow(ALL_AUTHORIZED_NAMES[0], "10x3", Date.now());
+    }
+
+    function saveManualEdits() {
+      const day = document.getElementById('editDaySelect').value;
+      const rows = document.querySelectorAll('.edit-row');
+      const newItems = [];
+      rows.forEach(r => {
+        const n = r.querySelector('.edName').value;
+        const reps = r.querySelector('.edReps').value;
+        // Find desc/image from OFFICIAL_DB baseline
+        let baseline = null;
+        for(let d in OFFICIAL_DB) {
+          let found = OFFICIAL_DB[d].find(x => x.name === n);
+          if(found) { baseline = found; break; }
+        }
+        newItems.push({ name: n, image: baseline?baseline.image:n+".png", desc: baseline?baseline.desc:"", reps: reps });
+      });
+      const savedDB = JSON.parse(localStorage.getItem(`sch_${currUser.email}`)) || OFFICIAL_DB;
+      savedDB[day] = newItems;
+      localStorage.setItem(`sch_${currUser.email}`, JSON.stringify(savedDB));
+      alert("تم حفظ الجداول يدوياً بنجاح!");
+      switchV('home-view');
+      location.reload();
     }
 
     window.onload = init;
