@@ -59,8 +59,26 @@
     .stat-card .value { font-size: 1.1rem; font-weight: 700; }
     .btn { display: block; width: 100%; padding: 0.8rem; font-size: 1.1rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--primary-color), #d97706); border: none; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
-    .exercise-img-wrapper { width: 180px; height: 180px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; position: relative; }
-    .exercise-img { max-width: 90%; max-height: 90%; animation: floatMotion 4s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3)); mix-blend-mode: screen; }
+    .exercise-img-wrapper { 
+      width: 250px; 
+      height: 250px; 
+      margin: 0 auto 1.5rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      position: relative; 
+      border-radius: 50%; 
+      overflow: hidden; 
+      border: 4px solid var(--primary-color); 
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+      background: rgba(0,0,0,0.4);
+    }
+    .exercise-img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover;
+      animation: floatMotion 4s ease-in-out infinite; 
+    }
     @keyframes floatMotion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     .timer-display { font-size: 3rem; font-weight: 800; color: var(--primary-color); text-align: center; margin: 0.5rem 0; font-family: monospace; }
     .chat-container { display: flex; flex-direction: column; height: 50vh; background: rgba(0,0,0,0.2); border-radius: 15px; overflow: hidden; }
@@ -214,16 +232,37 @@
       "الأحد": [
         { name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم.", reps: "20 دقيقة", timer: "1200" },
         { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم.", reps: "3 مجموعات", timer: "30" },
-        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك للأعلى بس.", reps: "3 مجموعات × 15", timer: "0" }
+        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك للأعلى بس.", reps: "3 مجموعات × 15", timer: "0" },
+        { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية.", reps: "3 مجموعات × 12", timer: "0" }
       ],
       "الإثنين": [
-        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى يقترب صدرك من الأرض.", reps: "4 مجموعات × 12", timer: "0" }
+        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى يقترب صدرك من الأرض.", reps: "4 مجموعات × 12", timer: "0" },
+        { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين. يركز على عضلة الصدر.", reps: "3 مجموعات × 10", timer: "0" },
+        { name: "بوش اب ضيق", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك. كوعيك للخلف.", reps: "3 مجموعات × 10", timer: "0" }
       ],
-      "الثلاثاء": [{ name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "مشي 5 دقائق ثم جري دقيقة وراحة دقيقة.", reps: "26 دقيقة", timer: "1560"}],
-      "الأربعاء": [{ name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف مع ثبات الكوع.", reps: "3 مجموعات × 12", timer: "0" }],
-      "الخميس": [{ name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي. ركبتيك ما تتجاوز أصابع قدميك.", reps: "4 مجموعات × 15", timer: "0" }],
-      "الجمعة": [{ name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف.", reps: "راحة", timer: "0" }],
-      "السبت": [{ name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط السرعة لمدة 30 دقيقة.", reps: "30 دقيقة", timer: "1800" }]
+      "الثلاثاء": [
+        { name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "مشي 5 دقائق ثم جري دقيقة وراحة دقيقة (كرر 8 مرات).", reps: "26 دقيقة", timer: "1560"}
+      ],
+      "الأربعاء": [
+        { name: "شد الحبال من الأعلى", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين. اشد جسمك للأعلى.", reps: "4 مجموعات", timer: "0" },
+        { name: "شد الحبال من الأمام", image: "شد الحبال من الأمام.png", desc: "امسك القضيب أمامك. اشد للأسفل نحو صدرك.", reps: "3 مجموعات × 12", timer: "0" },
+        { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف مع ثبات الكوع.", reps: "3 مجموعات × 12", timer: "0" },
+        { name: "سوبرمان", image: "سوبرمان.png", desc: "استلقي على بطنك، ارفع يديك ورجليك في نفس الوقت.", reps: "3 مجموعات × 12", timer: "0" }
+      ],
+      "الخميس": [
+        { name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي. ركبتيك ما تتجاوز أصابع قدميك.", reps: "4 مجموعات × 15", timer: "0" },
+        { name: "لانج - خطوات", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام وانزل حتى ركبتك الخلفية تقارب الأرض.", reps: "3 مجموعات × 10", timer: "0" },
+        { name: "جامب سكوات", image: "جامب سكوات.png", desc: "سكوات ثم اقفز للأعلى. انزل بنعومة.", reps: "3 مجموعات × 10", timer: "0" },
+        { name: "كرانش + رفع رجلين", image: "كرانش + رفع رجلين.png", desc: "تمرين مركب يجمع الكرانش مع رفع الرجلين.", reps: "3 مجموعات × 15", timer: "0" }
+      ],
+      "الجمعة": [
+        { name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف لتنشيط الدورة الدموية.", reps: "راحة", timer: "0" }
+      ],
+      "السبت": [
+        { name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط السرعة لمدة 30 دقيقة مستمرة.", reps: "30 دقيقة", timer: "1800" },
+        { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام واحس بالشد في الفخذ.", reps: "إطالة", timer: "15" },
+        { name: "إطالة الهامسترينج", image: "إطالة الهامسترينج.png", desc: "استلقي على ظهرك وارفع رجل واحدة مستقيمة.", reps: "إطالة", timer: "15" }
+      ]
     };
 
     let currentDayExercises = [];
