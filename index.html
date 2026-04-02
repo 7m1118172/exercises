@@ -3,299 +3,293 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>تـــمــــاريــن ابــــو عــــلــــي</title>
+  <title>نظام تمارين ابـو عـلـي المتكامل</title>
   
-  <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
   <style>
-    :root {
-      --primary-color: #f59e0b;
-      --secondary-color: #3b82f6;
-      --bg-color-1: #0f172a;
-      --bg-color-2: #1e1b4b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --success-color: #10b981;
-    }
-
     @font-face {
       font-family: 'TheYearofHandicrafts';
       src: url('TheYearofHandicrafts-Bold.otf') format('opentype');
     }
 
+    :root {
+      --primary: #f59e0b;
+      --secondary: #3b82f6;
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text: #f8fafc;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'TheYearofHandicrafts', 'Cairo', sans-serif; }
     body {
-      background: linear-gradient(-45deg, var(--bg-color-1), var(--bg-color-2), #000000, #172554);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: var(--text-main);
-      direction: rtl;
+      background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+      color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       overflow-x: hidden;
     }
-    @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    
-    header { padding: 1.5rem; text-align: center; background: var(--glass-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border); z-index: 10; position: sticky; top: 0; }
-    header h1 { font-size: 1.8rem; background: linear-gradient(to right, var(--primary-color), #fcd34d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    main { flex: 1; padding: 1rem; max-width: 600px; margin: 0 auto; width: 100%; position: relative; }
-    .view-section { display: none; width: 100%; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .view-section.active { display: block; }
-    @keyframes slideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
-    
-    .card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); margin-bottom: 1.5rem; }
-    .btn { display: block; width: 100%; padding: 0.8rem; font-size: 1.1rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--primary-color), #d97706); border: none; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
-    
-    .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
-    .stat-card { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 1rem; text-align: center; border: 1px solid var(--glass-border); }
-    .stat-card i { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.5rem; }
-    
-    .exercise-img-wrapper { width: 250px; height: 250px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 4px solid var(--primary-color); box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
-    .exercise-img { width: 100%; height: 100%; object-fit: cover; animation: floatMotion 4s ease-in-out infinite; }
-    @keyframes floatMotion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    
-    .chat-container { display: flex; flex-direction: column; height: 60vh; background: rgba(0,0,0,0.2); border-radius: 15px; overflow: hidden; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-    .message { max-width: 85%; padding: 0.8rem; border-radius: 15px; font-size: 0.9rem; animation: fadeIn 0.3s ease; }
-    .message.ai { background: rgba(59, 130, 246, 0.1); align-self: flex-start; border: 1px solid rgba(59, 130, 246, 0.2); }
-    .message.user { background: rgba(245, 158, 11, 0.1); align-self: flex-end; border: 1px solid rgba(245, 158, 11, 0.2); }
-    .chat-input-area { display: flex; padding: 0.8rem; background: var(--glass-bg); gap: 0.5rem; }
-    .chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 0.7rem; border-radius: 10px; }
-    .chat-input-area button { background: var(--primary-color); border: none; padding: 0 1.2rem; border-radius: 10px; color: white; cursor: pointer; }
 
-    .edit-item { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.8rem; border-radius: 12px; margin-bottom: 0.8rem; }
-    .edit-item input, .edit-item textarea { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 0.4rem; border-radius: 6px; width: 100%; margin-top: 5px; }
+    header { padding: 1.5rem; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border-bottom: 3px solid var(--primary); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+    header h1 { font-size: 1.8rem; background: linear-gradient(to right, var(--primary), #fcd34d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
 
-    .blob { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.3; }
-    .shape1 { width: 300px; height: 300px; background: var(--primary-color); top: -100px; left: -100px; }
-    .shape2 { width: 250px; height: 250px; background: var(--secondary-color); bottom: -50px; right: -50px; }
+    main { padding: 1.2rem; max-width: 550px; margin: 0 auto; }
+    .view-section { display: none; }
+    .view-section.active { display: block; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card { background: var(--card-bg); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6); }
+    .btn { display: block; width: 100%; padding: 1.1rem; border-radius: 15px; border: none; font-weight: 900; cursor: pointer; transition: 0.3s; text-align: center; font-size: 1.1rem; margin-top: 1rem; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #e67e22); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+    .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; }
+    .btn-ai { background: linear-gradient(135deg, #a855f7, #3b82f6); color: white; animation: pulseAI 2s infinite; }
+    @keyframes pulseAI { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+    .input-grp { margin-bottom: 1.5rem; }
+    .input-grp label { display: block; margin-bottom: 8px; font-weight: 800; color: var(--primary); font-size: 0.95rem; }
+    .input-grp input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.1rem; color: white; outline: none; }
+    
+    .nav-icon { background: var(--glass-border); border: none; color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+    .exercise-img-box { width: 260px; height: 260px; margin: 0 auto 2rem; border-radius: 50%; border: 5px solid var(--primary); overflow: hidden; box-shadow: 0 0 50px rgba(245, 158, 11, 0.5); }
+    .exercise-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .ai-bubble { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 15px; padding: 1rem; margin-bottom: 1.5rem; color: #d8b4fe; font-size: 0.9rem; }
+    .usr-item { display: flex; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--glass-border); font-size: 1rem; }
+    .joke-box { background: rgba(244, 63, 94, 0.1); border: 1px dashed #f43f5e; padding: 1rem; border-radius: 15px; margin-top: 1.5rem; font-size: 0.9rem; color: #fb7185; text-align:center; font-weight:bold; }
   </style>
 </head>
 <body>
 
-  <div class="blob shape1"></div>
-  <div class="blob shape2"></div>
-
   <header>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto;">
-      <div style="display: flex; gap: 10px;">
-        <button id="profileBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-user"></i></button>
-        <button id="chatBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--success-color); width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-robot"></i></button>
-      </div>
-      <h1 onclick="window.location.reload()" style="cursor:pointer;">تــمــــاريــن ابــــو عــــلــــي</h1>
-      <button id="homeBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-house"></i></button>
-    </div>
+    <button class="nav-icon" onclick="profileNav()"><i class="fa-solid fa-user-ninja"></i></button>
+    <h1 onclick="location.reload()">أبـو عـلـي فـيـتـنـس</h1>
+    <button class="nav-icon" onclick="switchV('home-view')"><i class="fa-solid fa-house"></i></button>
   </header>
 
   <main>
-    <!-- View 1: Home -->
-    <section id="home-view" class="view-section active card">
-      <h2 style="text-align:center; color: var(--primary-color); margin-bottom: 1rem;">يوم جديد.. هدف جديد 🔥</h2>
-      <p id="dashboardMessage" style="text-align:center; font-size:0.9rem; margin-bottom:1.5rem;"></p>
-      
-      <div class="dashboard-grid">
-        <div class="stat-card"><i class="fa-solid fa-calendar"></i><p style="font-size:0.7rem;">اليوم</p><div class="value" id="todayNameSpan">-</div></div>
-        <div class="stat-card"><i class="fa-solid fa-list-check"></i><p style="font-size:0.7rem;">التمارين</p><div class="value" id="todayExCount">0</div></div>
-        <div class="stat-card"><i class="fa-solid fa-fire"></i><p style="font-size:0.7rem;">الهدف</p><div class="value" style="color:#ef4444;">صحة</div></div>
+    <!-- View: Auth Gateway -->
+    <section id="auth-view" class="view-section active card">
+      <div style="display:flex; justify-content:center; gap:35px; margin-bottom:2.5rem;">
+        <h2 id="lT" onclick="tabA('l')" style="cursor:pointer; color:var(--primary); font-size:1.6rem; border-bottom:3px solid var(--primary);">دخول</h2>
+        <h2 id="rT" onclick="tabA('r')" style="cursor:pointer; opacity:0.4; font-size:1.6rem;">تسجيل</h2>
       </div>
-      
-      <button id="startWorkoutBtn" class="btn" style="margin-bottom: 1rem;">💪 ابدأ التدريب الآن</button>
-      <button id="goToEditBtn" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); margin-bottom: 1rem;">⚙️ تعديل الجداول</button>
-      <div style="text-align: center;">
-        <input type="file" id="excelUpload" accept=".xlsx, .xls" style="display: none;" />
-        <button id="uploadExcelBtn" style="background: none; border: none; color: var(--success-color); cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-file-excel"></i> رفع ملف إكسل (للمدرب فقط)</button>
+      <div id="lDiv">
+        <div class="input-grp"><label>البريد الإلكتروني</label><input type="email" id="inEmail" placeholder="hussainbanijamra@gmail.com"></div>
+        <div class="input-grp"><label>كلمة المرور</label><input type="password" id="inPass" placeholder="******"></div>
+        <button class="btn btn-primary" onclick="doAuth('l')">أنا وحش.. خلوني أدخل! 🥊</button>
+      </div>
+      <div id="rDiv" style="display:none;">
+        <div class="input-grp"><label>الاسم الكامل</label><input type="text" id="regN"></div>
+        <div class="input-grp"><label>البريد الإلكتروني</label><input type="email" id="regE"></div>
+        <div class="input-grp"><label>كلمة المرور</label><input type="password" id="regP"></div>
+        <button class="btn btn-primary" onclick="doAuth('r')">تسجيل كبطل جديد</button>
       </div>
     </section>
 
-    <!-- View 2: Login -->
-    <section id="login-view" class="view-section card" style="max-width: 400px; margin: 2rem auto;">
-      <h2 style="text-align:center; margin-bottom:1.5rem;">تـسـجـيـل الـدخـول</h2>
-      <div class="edit-item"><label>البريد الإلكتروني:</label><input type="email" id="loginEmail" placeholder="example@ali.com"></div>
-      <div class="edit-item"><label>كلمة المرور:</label><input type="password" id="loginPass" placeholder="******"></div>
-      <button id="doLoginBtn" class="btn" style="margin-top:1rem;">د خـول</button>
-      <p id="loginError" style="color:#ef4444; font-size:0.8rem; text-align:center; margin-top:1rem; display:none;">بيانات الدخول غير صحيحة!</p>
-    </section>
-
-    <!-- View 3: Workout -->
-    <section id="workout-view" class="view-section card">
-      <div id="exNum" style="text-align:center; font-size:0.8rem; color:var(--primary-color); margin-bottom:10px;">-</div>
-      <div class="exercise-img-wrapper"><img id="exImg" src="" alt="تمرين" class="exercise-img"></div>
-      <h2 id="exTitle" style="text-align:center; margin-bottom:1rem;">-</h2>
-      <div id="aiCoachBox" style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.3); padding:0.8rem; border-radius:12px; margin-bottom:1rem; font-size:0.85rem;"></div>
-      <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:12px; margin-bottom:1.5rem;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="color:var(--primary-color);">المطلوب:</span><span id="exReps" style="font-weight:bold;">-</span></div>
-        <p id="exDesc" style="font-size:0.85rem; opacity:0.8;">-</p>
+    <!-- View: Home -->
+    <section id="home-view" class="view-section card">
+      <h2 id="greet" style="text-align:center; margin-bottom:1.5rem; font-size:1.8rem;">صباااح النشاط يا عمي! 🔥</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:2rem;">
+        <div style="background:rgba(0,0,0,0.5); padding:1.2rem; border-radius:20px; text-align:center; border:1px solid var(--glass-border);">
+          <small>اليوم</small><div id="dDay" style="font-weight:900; font-size:1.3rem;">-</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.5); padding:1.2rem; border-radius:20px; text-align:center; border:1px solid var(--primary);">
+          <small>عدد التمارين</small><div id="dCount" style="font-weight:900; font-size:1.3rem; color:var(--primary);">0</div>
+        </div>
       </div>
-      <button id="nextExBtn" class="btn">التمرين التالي ⬅️</button>
+      <button class="btn btn-primary" onclick="startSession()">💪 ابدأ تمرينك وسكر جوالك فورا</button>
+      <button class="btn btn-ai" onclick="switchV('ai-view')">🤖 استشارة المدرب الآلي (للدببة فقط)</button>
+      <div class="joke-box" id="jokeBox">-</div>
     </section>
 
-    <!-- View 4: Chat -->
-    <section id="chat-view" class="view-section card" style="padding:0; overflow:hidden;">
-      <div class="chat-container">
-        <div id="chatMessages" class="chat-messages"></div>
-        <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="أنا مدربك.. اسألني أي شيء">
-          <button id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
-          <button id="aiGenBtn" style="background:var(--success-color);"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+    <!-- View: Workout Player -->
+    <section id="play-view" class="view-section card">
+      <div id="pProg" style="text-align:center; color:var(--primary); margin-bottom:12px; font-weight:900;">تمرين 1 / 10</div>
+      <div class="exercise-img-box"><img id="pImg" src=""></div>
+      <h2 id="pTitle" style="text-align:center; margin-bottom:1rem;">-</h2>
+      <div class="ai-bubble" id="pAI">جاري التحليل...</div>
+      <div style="background:rgba(0,0,0,0.4); padding:1.5rem; border-radius:20px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>المطلوب:</span><b id="pReps">-</b></div>
+        <p id="pDesc" style="font-size:0.9rem; opacity:0.85; line-height:1.6;">-</p>
+      </div>
+      <button class="btn btn-primary" id="pNext" onclick="nextEx()">التالي ⬅️</button>
+    </section>
+
+    <!-- View: Finished -->
+    <section id="finish-view" class="view-section card" style="text-align:center;">
+      <i class="fa-solid fa-medal" style="font-size:5rem; color:var(--primary); margin-bottom:1.5rem;"></i>
+      <h2 style="font-size:2rem; margin-bottom:1rem;">كفيت ووفيت! 🦁</h2>
+      <p style="opacity:0.8; margin-bottom:2rem;">جدولك لليوم خلص. الحين تقدر ترتاح يا بطل.</p>
+      <button class="btn btn-primary" onclick="location.reload()">العودة للرئيسية</button>
+    </section>
+
+    <!-- View: Admin Gateway -->
+    <section id="admin-login" class="view-section card" style="max-width:350px; margin:2rem auto;">
+      <h2 style="text-align:center; margin-bottom:1.5rem;">لوحة الكبار</h2>
+      <div class="input-grp"><label>كلمة نفاذ المشرف</label><input type="password" id="admP" placeholder="******" style="text-align:center; letter-spacing:5px;"></div>
+      <button class="btn btn-primary" onclick="chkAdmin()">دخـول</button>
+    </section>
+
+    <!-- View: Admin List -->
+    <section id="admin-view" class="view-section card">
+      <h2 style="text-align:center; margin-bottom:1rem;">جيش المستخدمين</h2>
+      <div id="uList" style="background:rgba(0,0,0,0.3); border-radius:20px; overflow:hidden;"></div>
+      <button class="btn btn-outline" style="margin-top:2rem;" onclick="switchV('home-view')">خروج</button>
+    </section>
+
+    <!-- View: AI Chat -->
+    <section id="ai-view" class="view-section card" style="padding:0; overflow:hidden;">
+      <div style="height:450px; display:flex; flex-direction:column;">
+        <div style="padding:1rem; border-bottom:1px solid var(--glass-border); text-align:center;">🤖 استشارة الأبطال</div>
+        <div id="aiMsgs" style="flex:1; overflow-y:auto; padding:1.2rem;"></div>
+        <div style="display:flex; padding:10px; background:rgba(0,0,0,0.5); gap:8px;">
+          <input type="text" id="aiIn" style="flex:1; background:none; border:1px solid var(--glass-border); padding:12px; border-radius:12px; color:white;">
+          <button class="btn btn-primary" style="width:55px; margin:0;" onclick="sendAI()"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
       </div>
     </section>
-
-    <!-- View 5: Profile -->
-    <section id="profile-view" class="view-section card">
-      <h2 style="text-align:center; margin-bottom:1.5rem;">ملفي الشخصي</h2>
-      <p id="profileGreeting" style="text-align:center; color:var(--primary-color); font-weight:bold; margin-bottom:1.5rem;"></p>
-      <div class="edit-item"><label>الوزن (كغ):</label><input type="number" id="uWeight" value="85"></div>
-      <div class="edit-item"><label>الهدف (كغ):</label><input type="number" id="tWeight" value="75"></div>
-      <button id="saveProfileBtn" class="btn" style="margin-bottom:1rem;">حفظ البيانات</button>
-      <button id="logoutBtn" class="btn" style="background:#475569; display:none;">تسجيل الخروج</button>
-    </section>
-
-    <!-- View 6: Edit -->
-    <section id="edit-view" class="view-section card">
-      <h2 style="text-align:center; margin-bottom:1rem;">إدارة التمارين</h2>
-      <select id="daySelect" class="btn" style="background:rgba(255,255,255,0.1); border:1px solid var(--glass-border); margin-bottom:1rem;">
-        <option value="الأحد">الأحد</option><option value="الإثنين">الإثنين</option><option value="الثلاثاء">الثلاثاء</option>
-        <option value="الأربعاء">الأربعاء</option><option value="الخميس">الخميس</option><option value="الجمعة">الجمعة</option><option value="السبت">السبت</option>
-      </select>
-      <div id="editList" style="max-height: 300px; overflow-y:auto; margin-bottom:1rem;"></div>
-      <button id="addExBtn" class="btn" style="background:#8b5cf6; margin-bottom:1rem;">+ إضافة تمرين</button>
-      <button id="saveEditBtn" class="btn">حفظ التغييرات</button>
-    </section>
-
   </main>
 
-  <audio id="finishAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
-
   <script>
-    const ADMIN_PASS = "123123";
-    const USERS = [{ email: "hussainbanijamra@gmail.com", pass: "34021013", name: "حـسـيـن" }];
-    const OFFICIAL_EXERCISES = ["مشي سريع على الجهاز", "بلانك", "كرانش", "رفع الرجلين", "بوش اب عادي", "بوش اب واسع", "بوش اب ضيق", "بلانك جانبي", "جري تقطيعي", "شد الحبال من الأعلى", "شد الحبال من الأمام", "بايسبس بالحبل", "سوبرمان", "سكوات", "لانج - خطوات", "جامب سكوات", "كرانش + رفع رجلين", "مشي متوسط"];
-    
-    let HUSSAIN_DATA = {
-      "الأحد": [{ name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم.", reps: "20 دقيقة", timer: "1200" }, { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم.", reps: "3 مجموعات", timer: "30" }, { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك للأعلى بس.", reps: "3 مجموعات × 15", timer: "0" }, { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية.", reps: "3 مجموعات × 12", timer: "0" }],
-      "الإثنين": [{ name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى يقترب صدرك من الأرض.", reps: "4 مجموعات × 12", timer: "0" }, { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين.", reps: "3 مجموعات × 10", timer: "0" }, { name: "بوش اب ضيق", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك.", reps: "3 مجموعات × 10", timer: "0" }],
-      "الثلاثاء": [{ name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "مشي 5 دقائق ثم جري دقيقة وراحة دقيقة.", reps: "26 دقيقة", timer: "1560"}],
-      "الأربعاء": [{ name: "شد الحبال من الأعلى", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين.", reps: "4 مجموعات", timer: "0" }, { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف.", reps: "3 مجموعات × 12", timer: "0" }],
-      "الخميس": [{ name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي.", reps: "4 مجموعات × 15", timer: "0" }, { name: "لانج - خطوات", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام.", reps: "3 مجموعات × 10", timer: "0" }],
-      "الجمعة": [{ name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف.", reps: "راحة", timer: "0" }],
-      "السبت": [{ name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط لمة 30 دقيقة.", reps: "30 دقيقة", timer: "1800" }, { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام.", reps: "إطالة", timer: "15" }]
+    // --- البيانات المقدسة (1:1 من ملف الإكسل) ---
+    const DB = {
+      "الأحد": [
+        { name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم، ما تتكئ على الحواجز. حرك يديك بشكل طبيعي.", reps: "20 دقيقة" },
+        { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم من الرأس للكعب.", reps: "3 مجموعات" },
+        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك وصدرك للأعلى بس — مو الظهر كله. انزل ببطء.", reps: "3 مجموعات × 15" },
+        { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية (90 درجة). نزّلهم ببطء.", reps: "3 مجموعات × 12" }
+      ],
+      "الإثنين": [
+        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى صدرك يقارب الأرض وارجع للأعلى.", reps: "4 مجموعات × 12" },
+        { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين. يركز على عضلة الصدر أكثر.", reps: "3 مجموعات × 10" },
+        { name: "بوش اب ضيق (ترايسبس)", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك. كوعيك يمشون للخلف مو للجانب.", reps: "3 مجموعات × 10" },
+        { name: "بلانك جانبي", image: "بلانك جانبي.png", desc: "استند على مرفق واحد وجانب قدمك. جسمك بخط مستقيم. كرر على الجهة الثانية.", reps: "2 مجموعة" }
+      ],
+      "الثلاثاء": [
+        { name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "إحماء 5 دقائق مشي هادي. ثم جري سريع دقيقة وراحة دقيقة (كرر 8 مرات).", reps: "26 دقيقة" }
+      ],
+      "الأربعاء": [
+        { name: "شد الحبال من الأعلى (Pull-up)", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين. اشد جسمك للأعلى حتى ذقنك يتجاوز القضيب.", reps: "4 مجموعات" },
+        { name: "شد الحبال من الأمام", image: "شد الحبال من الأمام.png", desc: "امسك القضيب أمامك. اشد للأسفل نحو صدرك. ظهرك مستقيم.", reps: "3 مجموعات × 12" },
+        { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف مع الحفاظ على ثبات الكوع. انزل ببطء.", reps: "3 مجموعات × 12" },
+        { name: "سوبرمان", image: "سوبرمان.png", desc: "استلقي على بطنك، ارفع يديك ورجليك في نفس الوقت. ثبّت ثانيتين ثم انزل.", reps: "3 مجموعات × 12" }
+      ],
+      "الخميس": [
+        { name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي. ركبتيك ما تتجاوز أصابع قدميك. ظهرك مستقيم.", reps: "4 مجموعات × 15" },
+        { name: "لانج (خطوات)", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام وانزل حتى ركبتك الخلفية تقارب الأرض. ارجع وكرر.", reps: "3 مجموعات × 10" },
+        { name: "جامب سكوات", image: "جامب سكوات.png", desc: "سكوات ثم اقفز للأعلى. انزل بنعومة على أصابع قدميك.", reps: "3 مجموعات × 10" },
+        { name: "كرانش + رفع رجلين", image: "كرانش + رفع رجلين.png", desc: "تمرين مركب يجمع الكرانش مع رفع الرجلين لتقوية الكور.", reps: "3 مجموعات × 15" }
+      ],
+      "الجمعة": [
+        { name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة لاستعادة الاستشفاء العضلي. يمكنك المشي الخفيف.", reps: "راحة" }
+      ],
+      "السبت": [
+        { name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط السرعة لمدة 30 دقيقة مستمرة.", reps: "30 دقيقة" },
+        { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام واحس بالشد في الفخذ الأمامي.", reps: "15 ثانية" },
+        { name: "إطالة الهامسترينج", image: "إطالة الهامسترينج.png", desc: "استلقي على ظهرك وارفع رجل واحدة مستقيمة للأعلى.", reps: "15 ثانية" },
+        { name: "إطالة الكتف", image: "إطالة الكتف.png", desc: "مد ذراعك أمامك واسحبها للجهة الثانية.", reps: "15 ثانية" },
+        { name: "إطالة الظهر", image: "إطالة الظهر.png", desc: "جمع ركبتيك لصدرك ودوّر ببطء.", reps: "15 ثانية" }
+      ]
     };
 
-    let isLoggedIn = false, currentUser = null, curDayExt = [], curExIdx = 0;
-    const GROQ_KEY = "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";
+    const JOKES = ["اضعف يا الدبة! 😂", "خفف أكل ترى الكرشة بتركب وياك السيارة! 🦆", "اشرب ماء كثيراً.. لا تصير مثل قشور الروبيان! 🍤", "التفت لنفسك يالسمين، التمرين بيفيدك! 🦍"];
+    let currUser = JSON.parse(localStorage.getItem('fitUser')) || null;
+    let currList = [], currIdx = 0;
+    const K = "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";
 
-    function switchView(id) { document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-    function getToday() { const d = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"]; return d[new Date().getDay()]; }
-
-    async function fetchGroq(msgs) {
-      try {
-        const r = await fetch("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "Authorization": `Bearer ${GROQ_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: msgs }) });
-        const d = await r.json(); return d.choices[0].message.content;
-      } catch(e) { return "المدرب غير متاح حالياً."; }
+    function switchV(id) {
+      if(!currUser && !['auth-view','admin-login','admin-view'].includes(id)) id = 'auth-view';
+      document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+      const el = document.getElementById(id); if(el) el.classList.add('active');
     }
 
     function init() {
-      // Admin Check
-      if(window.location.pathname === '/admin' || window.location.search === '?admin=true') {
-        const p = prompt("كلمة مرور الإدارة:");
-        if(p === ADMIN_PASS) { refreshEdit(getToday()); switchView('edit-view'); } 
-        else { alert("خطأ!"); window.location.href='/'; return; }
-      }
+      // Admin Priority check (?admin=1)
+      const p = new URLSearchParams(window.location.search);
+      if(p.has('admin') || window.location.pathname.includes('/admin')) { switchV('admin-login'); return; }
 
-      const s = sessionStorage.getItem('aliSess');
-      if(s) { isLoggedIn = true; currentUser = JSON.parse(s); }
-      
-      const localSchedules = localStorage.getItem('abuAliSchedules');
-      if(localSchedules) HUSSAIN_DATA = JSON.parse(localSchedules);
-
-      const today = getToday();
-      document.getElementById('todayNameSpan').textContent = today;
-      
-      if(isLoggedIn) {
-        curDayExt = JSON.parse(JSON.stringify(HUSSAIN_DATA[today] || []));
-        document.getElementById('todayExCount').textContent = curDayExt.length;
-        document.getElementById('dashboardMessage').textContent = `أهلاً بك يا ${currentUser.name}! جدولك جاهز للتحطيم.`;
-        document.getElementById('logoutBtn').style.display = 'block';
-        document.getElementById('profileGreeting').textContent = `أهلاً يا وحش ${currentUser.name}!`;
+      if(currUser) {
+        document.getElementById('greet').textContent = `أهلاً يا وحش الفريج ${currUser.name}! 🔥`;
+        const day = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"][new Date().getDay()];
+        document.getElementById('dDay').textContent = day;
+        currList = DB[day] || [];
+        document.getElementById('dCount').textContent = currList.length;
+        document.getElementById('jokeBox').textContent = JOKES[Math.floor(Math.random()*JOKES.length)];
+        switchV('home-view');
       } else {
-        curDayExt = [];
-        document.getElementById('todayExCount').textContent = "0";
-        document.getElementById('dashboardMessage').innerHTML = "<span style='color:var(--primary-color)'>سجل دخولك لمشاهدة تمارينك الخاصة، أو اطلب من المدرب الآلي إنشاء جدولك من هنا!</span>";
+        switchV('auth-view');
       }
-
-      // Handlers
-      document.getElementById('homeBtn').onclick = () => switchView('home-view');
-      document.getElementById('profileBtn').onclick = () => switchView('profile-view');
-      document.getElementById('chatBtn').onclick = () => switchView('chat-view');
-      document.getElementById('startWorkoutBtn').onclick = () => { if(curDayExt.length===0){alert("سجل دخولك أولاً!");return;} curExIdx=0; updateEx(); switchView('workout-view'); };
-      document.getElementById('goToEditBtn').onclick = () => { if(!isLoggedIn) switchView('login-view'); else { refreshEdit(getToday()); switchView('edit-view'); } };
-      document.getElementById('doLoginBtn').onclick = login;
-      document.getElementById('logoutBtn').onclick = () => { sessionStorage.removeItem('aliSess'); location.reload(); };
-      document.getElementById('nextExBtn').onclick = () => { if(curExIdx < curDayExt.length-1){ curExIdx++; updateEx(); } else { alert("كفيت ووفيت!"); switchView('home-view'); } };
-      document.getElementById('sendChatBtn').onclick = sendChat;
-      document.getElementById('aiGenBtn').onclick = triggerAI;
-      document.getElementById('addExBtn').onclick = () => addEditRow();
-      document.getElementById('saveEditBtn').onclick = saveEdit;
-      document.getElementById('daySelect').onchange = (e) => refreshEdit(e.target.value);
     }
 
-    function login() {
-      const e = document.getElementById('loginEmail').value, p = document.getElementById('loginPass').value;
-      const u = USERS.find(x => x.email === e && x.pass === p);
-      if(u) { sessionStorage.setItem('aliSess', JSON.stringify(u)); location.reload(); }
-      else document.getElementById('loginError').style.display='block';
+    function tabA(t) {
+      document.getElementById('lDiv').style.display = t==='l'?'block':'none';
+      document.getElementById('rDiv').style.display = t==='l'?'none':'block';
+      document.getElementById('lT').style.opacity = t==='l'?1:0.4;
+      document.getElementById('lT').style.borderBottom = t==='l'?'3px solid var(--primary)':'none';
+      document.getElementById('rT').style.opacity = t==='l'?0.4:1;
+      document.getElementById('rT').style.borderBottom = t==='l'?'none':'3px solid var(--primary)';
     }
 
-    function updateEx() {
-      const x = curDayExt[curExIdx];
-      document.getElementById('exNum').textContent = `تمرين ${curExIdx+1} من ${curDayExt.length}`;
-      document.getElementById('exTitle').textContent = x.name;
-      document.getElementById('exReps').textContent = x.reps;
-      document.getElementById('exDesc').textContent = x.desc;
-      document.getElementById('exImg').src = `https://raw.githubusercontent.com/7m1118172/photo-render/main/${x.image.replace(/ /g,'%20')}`;
+    function doAuth(t) {
+      if(t==='l') {
+        const e = document.getElementById('inEmail').value, p = document.getElementById('inPass').value;
+        const admins = [{name:"حسين", email:"hussainbanijamra@gmail.com", pass:"34021013"}];
+        const all = [...admins, ...JSON.parse(localStorage.getItem('db_u')||'[]')];
+        const found = all.find(x => x.email === e && x.pass === p);
+        if(found) { localStorage.setItem('fitUser', JSON.stringify(found)); location.reload(); } else alert("خطأ!");
+      } else {
+        const n = document.getElementById('regN').value, e = document.getElementById('regE').value, p = document.getElementById('regP').value;
+        if(!n||!e||!p) return alert("املأ الفراغات!");
+        let db = JSON.parse(localStorage.getItem('db_u')||'[]');
+        db.push({name:n, email:e, pass:p});
+        localStorage.setItem('db_u', JSON.stringify(db));
+        alert("تم! الحين سجل دخولك."); tabA('l');
+      }
+    }
+
+    function profileNav() { if(currUser) { if(confirm("تبي تسجل خروجك؟")) { localStorage.removeItem('fitUser'); location.reload(); } } else switchV('auth-view'); }
+
+    function startSession() { currIdx=0; updateUI(); switchV('play-view'); }
+    function updateUI() {
+      const x = currList[currIdx];
+      document.getElementById('pProg').textContent = `تمرين ${currIdx+1} من ${currList.length}`;
+      document.getElementById('pTitle').textContent = x.name;
+      document.getElementById('pReps').textContent = x.reps;
+      document.getElementById('pDesc').textContent = x.desc;
+      document.getElementById('pImg').src = `https://raw.githubusercontent.com/7m1118172/photo-render/main/${x.image.replace(/ /g,'%20')}`;
+      document.getElementById('pNext').textContent = (currIdx === currList.length-1) ? "أنهيت اليوم بطل! 🥇" : "التالي ➡️";
       
-      const coach = document.getElementById('aiCoachBox'); 
-      coach.innerHTML = "جاري التحفيز...";
-      fetchGroq([{role:"system",content:"كن محفزاً ومختصراً جداً!"},{role:"user",content:x.name}]).then(r => coach.innerHTML = r);
+      const ai = document.getElementById('pAI'); ai.textContent = "جاري طلب نصيحة...";
+      fetchG([{role:"system",content:"حفز البطل بكلمتين."}, {role:"user",content:x.name}]).then(r => ai.textContent = r);
+    }
+    function nextEx() { if(currIdx < currList.length-1){ currIdx++; updateUI(); } else { switchV('finish-view'); } }
+
+    async function fetchG(m) {
+      try {
+        const r = await fetch("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "Authorization": `Bearer ${K}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: m }) }).then(r=>r.json());
+        return r.choices[0].message.content;
+      } catch(e) { return "عاش الوحش!"; }
     }
 
-    let history = [{role:"system", content:`أنت مدرب وحش وحماسي. اسأل اللاعب أولاً عن وزنه الحالي وهدفه. اقترح تمارين من هذه القائمة فقط: [${OFFICIAL_EXERCISES.join(', ')}]. ممنوع اقتراح أي تمرين خارجها.`}];
-    async function sendChat() {
-      const i = document.getElementById('chatInput'), m = i.value; if(!m) return;
-      document.getElementById('chatMessages').innerHTML += `<div class="message user">${m}</div>`; i.value='';
-      const r = await fetchGroq([...history, {role:"user", content:m}]);
-      document.getElementById('chatMessages').innerHTML += `<div class="message ai">${r}</div>`;
-      history.push({role:"user",content:m},{role:"assistant",content:r});
-      document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+    async function sendAI() {
+      const i = document.getElementById('aiIn'), m = i.value; if(!m) return;
+      const b = document.getElementById('aiMsgs');
+      b.innerHTML += `<div style="background:rgba(245,158,11,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">${m}</div>`;
+      i.value = '';
+      const r = await fetchG([{role:"system",content:"أنت مدرب وحش ومارحمة. حفز المستخدم وابدأ بكلمة 'اسمعني يا وحش'."}, {role:"user",content:m}]);
+      b.innerHTML += `<div style="background:rgba(59,130,246,0.1); padding:10px; border-radius:10px; margin-bottom:10px;">${r}</div>`;
+      b.scrollTop = b.scrollHeight;
     }
 
-    async function triggerAI() {
-      const r = await fetchGroq([...history, {role:"user", content:"الآن اقترح لي جدولاً من 5 تمارين من قائمتك المعتمدة بناءً على رغبتي."}]);
-      document.getElementById('chatMessages').innerHTML += `<div class="message ai">إليك الجدول المقترح (من القائمة الرسمية):<br>${r.replace(/\n/g,'<br>')}</div>`;
-    }
-
-    function refreshEdit(day) {
-      const l = document.getElementById('editList'); l.innerHTML = '';
-      (HUSSAIN_DATA[day] || []).forEach(x => addEditRow(x));
-    }
-    function addEditRow(x={name:'',reps:'',timer:0,desc:'',image:''}) {
-      const d = document.createElement('div'); d.className='edit-item';
-      d.innerHTML = `<input class="en" value="${x.name}" placeholder="الاسم"><input class="er" value="${x.reps}" placeholder="التكرار"><input class="ei" value="${x.image}" placeholder="اسم الصورة .png"><textarea class="ed">${x.desc}</textarea><button onclick="this.parentElement.remove()" style="color:red; background:none; border:none; margin-top:5px; cursor:pointer;">حذف</button>`;
-      document.getElementById('editList').appendChild(d);
-    }
-    function saveEdit() {
-      const d = document.getElementById('daySelect').value, res = [];
-      document.querySelectorAll('.edit-item').forEach(v => { res.push({name:v.querySelector('.en').value, reps:v.querySelector('.er').value, image:v.querySelector('.ei').value, desc:v.querySelector('.ed').value}); });
-      HUSSAIN_DATA[d] = res; localStorage.setItem('abuAliSchedules', JSON.stringify(HUSSAIN_DATA)); alert("تم الحفظ!");
+    function chkAdmin() {
+      if(document.getElementById('admP').value === '123123') {
+        const b = document.getElementById('uList');
+        const admins = [{name:"حسين (مطور)", email:"hussainbanijamra@gmail.com"}];
+        const db = [...admins, ...JSON.parse(localStorage.getItem('db_u')||'[]')];
+        b.innerHTML = db.map(u => `<div class="usr-item"><span>${u.name}</span><span>${u.email}</span></div>`).join('');
+        switchV('admin-view');
+      } else alert("بطل! حاول مرة ثانية.");
     }
 
     window.onload = init;
