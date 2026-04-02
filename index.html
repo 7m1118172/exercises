@@ -11,11 +11,6 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
   <style>
-    /* 
-    ==================================================
-    🔥 Integrated CSS Styles 🔥
-    ==================================================
-    */
     :root {
       --primary-color: #f59e0b;
       --secondary-color: #3b82f6;
@@ -46,72 +41,48 @@
       overflow-x: hidden;
     }
     @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    
     header { padding: 1.5rem; text-align: center; background: var(--glass-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border); z-index: 10; position: sticky; top: 0; }
     header h1 { font-size: 1.8rem; background: linear-gradient(to right, var(--primary-color), #fcd34d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    
     main { flex: 1; padding: 1rem; max-width: 600px; margin: 0 auto; width: 100%; position: relative; }
     .view-section { display: none; width: 100%; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .view-section.active { display: block; }
     @keyframes slideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+    
     .card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); margin-bottom: 1.5rem; }
+    .btn { display: block; width: 100%; padding: 0.8rem; font-size: 1.1rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--primary-color), #d97706); border: none; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
+    
     .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
     .stat-card { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 1rem; text-align: center; border: 1px solid var(--glass-border); }
     .stat-card i { font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.5rem; }
-    .stat-card .value { font-size: 1.1rem; font-weight: 700; }
-    .btn { display: block; width: 100%; padding: 0.8rem; font-size: 1.1rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--primary-color), #d97706); border: none; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: center; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
-    .exercise-img-wrapper { 
-      width: 250px; 
-      height: 250px; 
-      margin: 0 auto 1.5rem; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      position: relative; 
-      border-radius: 50%; 
-      overflow: hidden; 
-      border: 4px solid var(--primary-color); 
-      box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
-      background: rgba(0,0,0,0.4);
-    }
-    .exercise-img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover;
-      animation: floatMotion 4s ease-in-out infinite; 
-    }
+    
+    .exercise-img-wrapper { width: 250px; height: 250px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 4px solid var(--primary-color); box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
+    .exercise-img { width: 100%; height: 100%; object-fit: cover; animation: floatMotion 4s ease-in-out infinite; }
     @keyframes floatMotion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .timer-display { font-size: 3rem; font-weight: 800; color: var(--primary-color); text-align: center; margin: 0.5rem 0; font-family: monospace; }
-    .chat-container { display: flex; flex-direction: column; height: 50vh; background: rgba(0,0,0,0.2); border-radius: 15px; overflow: hidden; }
+    
+    .chat-container { display: flex; flex-direction: column; height: 60vh; background: rgba(0,0,0,0.2); border-radius: 15px; overflow: hidden; }
     .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
-    .message { max-width: 85%; padding: 0.8rem; border-radius: 15px; font-size: 0.9rem; line-height: 1.4; animation: fadeInMsg 0.3s ease; }
+    .message { max-width: 85%; padding: 0.8rem; border-radius: 15px; font-size: 0.9rem; animation: fadeIn 0.3s ease; }
     .message.ai { background: rgba(59, 130, 246, 0.1); align-self: flex-start; border: 1px solid rgba(59, 130, 246, 0.2); }
     .message.user { background: rgba(245, 158, 11, 0.1); align-self: flex-end; border: 1px solid rgba(245, 158, 11, 0.2); }
     .chat-input-area { display: flex; padding: 0.8rem; background: var(--glass-bg); gap: 0.5rem; }
     .chat-input-area input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 0.7rem; border-radius: 10px; }
     .chat-input-area button { background: var(--primary-color); border: none; padding: 0 1.2rem; border-radius: 10px; color: white; cursor: pointer; }
-    .ai-analysis-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.8rem; border-radius: 12px; margin-top: 1rem; font-size: 0.85rem; }
-    .edit-list { max-height: 350px; overflow-y: auto; margin-bottom: 1rem; padding-right: 0.3rem; }
-    .edit-item { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.8rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .edit-item input, .edit-item textarea { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 0.4rem; border-radius: 6px; width: 100%; }
-    .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 1rem; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.4s ease; }
-    
-    /* Blob Shapes */
-    .blob { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.4; }
+
+    .edit-item { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.8rem; border-radius: 12px; margin-bottom: 0.8rem; }
+    .edit-item input, .edit-item textarea { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: white; padding: 0.4rem; border-radius: 6px; width: 100%; margin-top: 5px; }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.3; }
     .shape1 { width: 300px; height: 300px; background: var(--primary-color); top: -100px; left: -100px; }
     .shape2 { width: 250px; height: 250px; background: var(--secondary-color); bottom: -50px; right: -50px; }
-    .shape3 { width: 200px; height: 200px; background: #8b5cf6; top: 40%; right: -50px; }
-    
-    .summary-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-    .summary-table th, .summary-table td { padding: 0.6rem; border-bottom: 1px solid var(--glass-border); text-align: right; }
-    .summary-table th { color: var(--primary-color); }
   </style>
 </head>
 <body>
 
   <div class="blob shape1"></div>
   <div class="blob shape2"></div>
-  <div class="blob shape3"></div>
 
   <header>
     <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto;">
@@ -119,7 +90,7 @@
         <button id="profileBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-user"></i></button>
         <button id="chatBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--success-color); width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-robot"></i></button>
       </div>
-      <h1 style="margin: 0;">تــمــــاريــن ابــــو عــــلــــي</h1>
+      <h1 onclick="window.location.reload()" style="cursor:pointer;">تــمــــاريــن ابــــو عــــلــــي</h1>
       <button id="homeBtn" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;"><i class="fa-solid fa-house"></i></button>
     </div>
   </header>
@@ -128,289 +99,206 @@
     <!-- View 1: Home -->
     <section id="home-view" class="view-section active card">
       <h2 style="text-align:center; color: var(--primary-color); margin-bottom: 1rem;">يوم جديد.. هدف جديد 🔥</h2>
+      <p id="dashboardMessage" style="text-align:center; font-size:0.9rem; margin-bottom:1.5rem;"></p>
+      
       <div class="dashboard-grid">
         <div class="stat-card"><i class="fa-solid fa-calendar"></i><p style="font-size:0.7rem;">اليوم</p><div class="value" id="todayNameSpan">-</div></div>
         <div class="stat-card"><i class="fa-solid fa-list-check"></i><p style="font-size:0.7rem;">التمارين</p><div class="value" id="todayExCount">0</div></div>
-        <div class="stat-card"><i class="fa-solid fa-fire"></i><p style="font-size:0.7rem;">الهدف</p><div class="value" style="color:#ef4444;">تنشيف</div></div>
+        <div class="stat-card"><i class="fa-solid fa-fire"></i><p style="font-size:0.7rem;">الهدف</p><div class="value" style="color:#ef4444;">صحة</div></div>
       </div>
+      
       <button id="startWorkoutBtn" class="btn" style="margin-bottom: 1rem;">💪 ابدأ التدريب الآن</button>
-      <button id="goToEditBtn" class="btn" style="background: rgba(255,255,255,0.1); box-shadow: none; border: 1px solid var(--glass-border); margin-bottom: 1rem;">⚙️ تعديل الجداول</button>
+      <button id="goToEditBtn" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); margin-bottom: 1rem;">⚙️ تعديل الجداول</button>
       <div style="text-align: center;">
         <input type="file" id="excelUpload" accept=".xlsx, .xls" style="display: none;" />
-        <button id="uploadExcelBtn" style="background: none; border: none; color: var(--success-color); cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-file-excel"></i> رفع ملف إكسل من جديد</button>
+        <button id="uploadExcelBtn" style="background: none; border: none; color: var(--success-color); cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-file-excel"></i> رفع ملف إكسل (للمدرب فقط)</button>
       </div>
     </section>
 
-    <!-- View 2: Edit -->
-    <section id="edit-view" class="view-section card">
-      <h2 style="text-align: center; margin-bottom: 1rem;">تخصيص الجداول</h2>
-      <select id="editDaySelector" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); margin-bottom: 1rem;">
-        <option value="الأحد">الأحد</option><option value="الإثنين">الإثنين</option><option value="الثلاثاء">الثلاثاء</option>
-        <option value="الأربعاء">الأربعاء</option><option value="الخميس">الخميس</option><option value="الجمعة">الجمعة</option>
-        <option value="السبت">السبت</option>
-      </select>
-      <div id="editList" class="edit-list"></div>
-      <button id="addExerciseBtn" class="btn" style="background: #8b5cf6; margin-bottom: 0.8rem;">+ إضافة تمرين</button>
-      <button id="saveEditBtn" class="btn">✅ حفظ التعديلات</button>
+    <!-- View 2: Login -->
+    <section id="login-view" class="view-section card" style="max-width: 400px; margin: 2rem auto;">
+      <h2 style="text-align:center; margin-bottom:1.5rem;">تـسـجـيـل الـدخـول</h2>
+      <div class="edit-item"><label>البريد الإلكتروني:</label><input type="email" id="loginEmail" placeholder="example@ali.com"></div>
+      <div class="edit-item"><label>كلمة المرور:</label><input type="password" id="loginPass" placeholder="******"></div>
+      <button id="doLoginBtn" class="btn" style="margin-top:1rem;">د خـول</button>
+      <p id="loginError" style="color:#ef4444; font-size:0.8rem; text-align:center; margin-top:1rem; display:none;">بيانات الدخول غير صحيحة!</p>
     </section>
 
     <!-- View 3: Workout -->
     <section id="workout-view" class="view-section card">
-      <div class="progress-container"><div id="progressBar" class="progress-bar"></div></div>
-      <div id="exerciseNumber" style="text-align:center; font-size:0.8rem; color:var(--primary-color); margin-bottom:1rem;">-</div>
-      <div class="exercise-img-wrapper"><img id="exerciseImage" src="" alt="تمرين" class="exercise-img"></div>
-      <h2 id="exerciseTitle" style="text-align:center; margin-bottom:1rem;">-</h2>
-      
-      <div id="timerContainer" style="display:none; background:rgba(0,0,0,0.3); border-radius:15px; padding:1rem; margin-bottom:1rem;">
-        <div class="timer-display" id="timerDisplay">00:00</div>
-        <div style="display:flex; gap:10px; justify-content:center;">
-          <button id="startTimerBtn" class="btn" style="width:50px; height:50px; border-radius:50%;"><i class="fa-solid fa-play"></i></button>
-          <button id="resetTimerBtn" class="btn" style="width:50px; height:50px; border-radius:50%; background:#94a3b8;"><i class="fa-solid fa-rotate-left"></i></button>
-        </div>
+      <div id="exNum" style="text-align:center; font-size:0.8rem; color:var(--primary-color); margin-bottom:10px;">-</div>
+      <div class="exercise-img-wrapper"><img id="exImg" src="" alt="تمرين" class="exercise-img"></div>
+      <h2 id="exTitle" style="text-align:center; margin-bottom:1rem;">-</h2>
+      <div id="aiCoachBox" style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.3); padding:0.8rem; border-radius:12px; margin-bottom:1rem; font-size:0.85rem;"></div>
+      <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:12px; margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="color:var(--primary-color);">المطلوب:</span><span id="exReps" style="font-weight:bold;">-</span></div>
+        <p id="exDesc" style="font-size:0.85rem; opacity:0.8;">-</p>
       </div>
-
-      <div class="ai-analysis-box" id="aiAnalysisBox" style="display:none;"></div>
-      
-      <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:12px; margin: 1rem 0;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span style="color:var(--primary-color);">المطلوب:</span><span id="exerciseReps" style="font-weight:bold;">-</span></div>
-        <p id="exerciseDesc" style="font-size:0.85rem; opacity:0.8;">-</p>
-      </div>
-
-      <button id="nextExerciseBtn" class="btn">التمرين التالي ⬅️</button>
+      <button id="nextExBtn" class="btn">التمرين التالي ⬅️</button>
     </section>
 
-    <!-- View 4: Finish -->
-    <section id="finished-view" class="view-section card" style="text-align: center;">
-      <i class="fa-solid fa-trophy" style="font-size:4rem; color:gold; margin-bottom:1rem;"></i>
-      <h2>كفيت ووفيت يا بطل!</h2>
-      <div style="background:rgba(16, 185, 129, 0.1); border:1px dashed var(--success-color); padding:1rem; border-radius:12px; margin:1rem 0;">
-        <p id="calorieEstimation" style="font-weight:bold;">🔥 حرقنا الكثير اليوم!</p>
-        <p id="weightLossEstimation" style="font-size:0.8rem; color:var(--success-color); margin-top:0.3rem;">استمر لتصل لهدفك</p>
-      </div>
-      <div style="max-height: 200px; overflow-y: auto;">
-        <table class="summary-table"><thead><tr><th>التمرين</th><th>النتيجة</th></tr></thead><tbody id="summaryTableBody"></tbody></table>
-      </div>
-      <button id="finishBtn" class="btn" style="margin-top:1rem;">العودة للرئيسية</button>
-    </section>
-
-    <!-- View 5: Chat -->
+    <!-- View 4: Chat -->
     <section id="chat-view" class="view-section card" style="padding:0; overflow:hidden;">
-      <div style="padding:1rem; text-align:center; background:rgba(0,0,0,0.3);"><h3>🤖 مساعدك الرياضي</h3></div>
       <div class="chat-container">
         <div id="chatMessages" class="chat-messages"></div>
         <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="أنا هنا لتحفيزك.. اسألني أي شي">
+          <input type="text" id="chatInput" placeholder="أنا مدربك.. اسألني أي شيء">
           <button id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
-          <button id="aiGenerateBtn" style="background:var(--success-color);"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+          <button id="aiGenBtn" style="background:var(--success-color);"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
         </div>
       </div>
     </section>
 
-    <!-- View 6: Profile -->
+    <!-- View 5: Profile -->
     <section id="profile-view" class="view-section card">
       <h2 style="text-align:center; margin-bottom:1.5rem;">ملفي الشخصي</h2>
-      <div class="edit-item"><label>الوزن الحالي (كغ):</label><input type="number" id="userWeight" value="85"></div>
-      <div class="edit-item"><label>الوزن المستهدف (كغ):</label><input type="number" id="targetWeight" value="75"></div>
-      <button id="saveProfileBtn" class="btn" style="margin-bottom:1rem;">💾 حفظ البيانات</button>
-      <div style="border-top:1px solid var(--glass-border); padding-top:1.5rem; margin-top:1.5rem; text-align:center;">
-        <p style="color:#ef4444; font-size:0.8rem; margin-bottom:0.8rem;">⚠️ هذا الخيار يقوم بمسح جميع تعديلاتك</p>
-        <button id="resetAppBtn" style="background:none; border:1px solid #ef4444; color:#ef4444; padding:0.5rem 1rem; border-radius:8px; cursor:pointer;">حذف كل شيء والبدء من جديد</button>
-      </div>
+      <p id="profileGreeting" style="text-align:center; color:var(--primary-color); font-weight:bold; margin-bottom:1.5rem;"></p>
+      <div class="edit-item"><label>الوزن (كغ):</label><input type="number" id="uWeight" value="85"></div>
+      <div class="edit-item"><label>الهدف (كغ):</label><input type="number" id="tWeight" value="75"></div>
+      <button id="saveProfileBtn" class="btn" style="margin-bottom:1rem;">حفظ البيانات</button>
+      <button id="logoutBtn" class="btn" style="background:#475569; display:none;">تسجيل الخروج</button>
+    </section>
+
+    <!-- View 6: Edit -->
+    <section id="edit-view" class="view-section card">
+      <h2 style="text-align:center; margin-bottom:1rem;">إدارة التمارين</h2>
+      <select id="daySelect" class="btn" style="background:rgba(255,255,255,0.1); border:1px solid var(--glass-border); margin-bottom:1rem;">
+        <option value="الأحد">الأحد</option><option value="الإثنين">الإثنين</option><option value="الثلاثاء">الثلاثاء</option>
+        <option value="الأربعاء">الأربعاء</option><option value="الخميس">الخميس</option><option value="الجمعة">الجمعة</option><option value="السبت">السبت</option>
+      </select>
+      <div id="editList" style="max-height: 300px; overflow-y:auto; margin-bottom:1rem;"></div>
+      <button id="addExBtn" class="btn" style="background:#8b5cf6; margin-bottom:1rem;">+ إضافة تمرين</button>
+      <button id="saveEditBtn" class="btn">حفظ التغييرات</button>
     </section>
 
   </main>
 
-  <audio id="timerAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+  <audio id="finishAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
   <script>
-    /* 
-    ==================================================
-    🔥 Full Integrated Logic 🔥
-    ==================================================
-    */
-    const excelFallbackData = {
-      "الأحد": [
-        { name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم.", reps: "20 دقيقة", timer: "1200" },
-        { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم.", reps: "3 مجموعات", timer: "30" },
-        { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك للأعلى بس.", reps: "3 مجموعات × 15", timer: "0" },
-        { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية.", reps: "3 مجموعات × 12", timer: "0" }
-      ],
-      "الإثنين": [
-        { name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى يقترب صدرك من الأرض.", reps: "4 مجموعات × 12", timer: "0" },
-        { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين. يركز على عضلة الصدر.", reps: "3 مجموعات × 10", timer: "0" },
-        { name: "بوش اب ضيق", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك. كوعيك للخلف.", reps: "3 مجموعات × 10", timer: "0" }
-      ],
-      "الثلاثاء": [
-        { name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "مشي 5 دقائق ثم جري دقيقة وراحة دقيقة (كرر 8 مرات).", reps: "26 دقيقة", timer: "1560"}
-      ],
-      "الأربعاء": [
-        { name: "شد الحبال من الأعلى", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين. اشد جسمك للأعلى.", reps: "4 مجموعات", timer: "0" },
-        { name: "شد الحبال من الأمام", image: "شد الحبال من الأمام.png", desc: "امسك القضيب أمامك. اشد للأسفل نحو صدرك.", reps: "3 مجموعات × 12", timer: "0" },
-        { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف مع ثبات الكوع.", reps: "3 مجموعات × 12", timer: "0" },
-        { name: "سوبرمان", image: "سوبرمان.png", desc: "استلقي على بطنك، ارفع يديك ورجليك في نفس الوقت.", reps: "3 مجموعات × 12", timer: "0" }
-      ],
-      "الخميس": [
-        { name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي. ركبتيك ما تتجاوز أصابع قدميك.", reps: "4 مجموعات × 15", timer: "0" },
-        { name: "لانج - خطوات", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام وانزل حتى ركبتك الخلفية تقارب الأرض.", reps: "3 مجموعات × 10", timer: "0" },
-        { name: "جامب سكوات", image: "جامب سكوات.png", desc: "سكوات ثم اقفز للأعلى. انزل بنعومة.", reps: "3 مجموعات × 10", timer: "0" },
-        { name: "كرانش + رفع رجلين", image: "كرانش + رفع رجلين.png", desc: "تمرين مركب يجمع الكرانش مع رفع الرجلين.", reps: "3 مجموعات × 15", timer: "0" }
-      ],
-      "الجمعة": [
-        { name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف لتنشيط الدورة الدموية.", reps: "راحة", timer: "0" }
-      ],
-      "السبت": [
-        { name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط السرعة لمدة 30 دقيقة مستمرة.", reps: "30 دقيقة", timer: "1800" },
-        { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام واحس بالشد في الفخذ.", reps: "إطالة", timer: "15" },
-        { name: "إطالة الهامسترينج", image: "إطالة الهامسترينج.png", desc: "استلقي على ظهرك وارفع رجل واحدة مستقيمة.", reps: "إطالة", timer: "15" }
-      ]
+    const ADMIN_PASS = "123123";
+    const USERS = [{ email: "hussainbanijamra@gmail.com", pass: "34021013", name: "حـسـيـن" }];
+    const OFFICIAL_EXERCISES = ["مشي سريع على الجهاز", "بلانك", "كرانش", "رفع الرجلين", "بوش اب عادي", "بوش اب واسع", "بوش اب ضيق", "بلانك جانبي", "جري تقطيعي", "شد الحبال من الأعلى", "شد الحبال من الأمام", "بايسبس بالحبل", "سوبرمان", "سكوات", "لانج - خطوات", "جامب سكوات", "كرانش + رفع رجلين", "مشي متوسط"];
+    
+    let HUSSAIN_DATA = {
+      "الأحد": [{ name: "مشي سريع على الجهاز", image: "المشي او الركض في الة المشي.png", desc: "اضبط السرعة بين 5-6.5 كم/ساعة. ظهرك مستقيم.", reps: "20 دقيقة", timer: "1200" }, { name: "بلانك", image: "بلانك عادي.png", desc: "ارتكز على مرفقيك وأصابع قدميك. جسمك بخط مستقيم.", reps: "3 مجموعات", timer: "30" }, { name: "كرانش", image: "الكرانش.png", desc: "استلقي على ظهرك، ارفع كتفيك للأعلى بس.", reps: "3 مجموعات × 15", timer: "0" }, { name: "رفع الرجلين", image: "رفع الرجلين.png", desc: "استلقي على ظهرك، ارفع رجليك للأعلى حتى تصير عمودية.", reps: "3 مجموعات × 12", timer: "0" }],
+      "الإثنين": [{ name: "بوش اب عادي", image: "بوش اب عادي.png", desc: "يديك أعرض شوي من كتفيك. انزل حتى يقترب صدرك من الأرض.", reps: "4 مجموعات × 12", timer: "0" }, { name: "بوش اب واسع", image: "بوش اب واسع.png", desc: "يديك أوسع بكثير من الكتفين.", reps: "3 مجموعات × 10", timer: "0" }, { name: "بوش اب ضيق", image: "بوش اب ضيق.png", desc: "يديك قريبين من بعض تحت صدرك.", reps: "3 مجموعات × 10", timer: "0" }],
+      "الثلاثاء": [{ name: "جري تقطيعي", image: "المشي او الركض في الة المشي.png", desc: "مشي 5 دقائق ثم جري دقيقة وراحة دقيقة.", reps: "26 دقيقة", timer: "1560"}],
+      "الأربعاء": [{ name: "شد الحبال من الأعلى", image: "شد الحبال من الأعلى.png", desc: "امسك القضيب أعرض من الكتفين.", reps: "4 مجموعات", timer: "0" }, { name: "بايسبس بالحبل", image: "بايسبس بالحبل.png", desc: "ثنّي المرفق وارفع الإيد للكتف.", reps: "3 مجموعات × 12", timer: "0" }],
+      "الخميس": [{ name: "سكوات", image: "سكوات.png", desc: "انزل كأنك قاعد على كرسي.", reps: "4 مجموعات × 15", timer: "0" }, { name: "لانج - خطوات", image: "لانج - خطوات.png", desc: "خطوة كبيرة للأمام.", reps: "3 مجموعات × 10", timer: "0" }],
+      "الجمعة": [{ name: "راحة نشطة", image: "المشي او الركض في الة المشي.png", desc: "يوم راحة.. استمتع بالمشي الخفيف.", reps: "راحة", timer: "0" }],
+      "السبت": [{ name: "مشي متوسط", image: "مشي خفيف.png", desc: "مشي متوسط لمة 30 دقيقة.", reps: "30 دقيقة", timer: "1800" }, { name: "إطالة الفخذ الأمامي", image: "إطالة الفخذ الأمامي.png", desc: "ادفع وركك للأمام.", reps: "إطالة", timer: "15" }]
     };
 
-    let currentDayExercises = [];
-    let currentExerciseIndex = 0;
-    let timerInterval = null;
-    let timeLeft = 0;
-    const GROQ_API_KEY = "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";
+    let isLoggedIn = false, currentUser = null, curDayExt = [], curExIdx = 0;
+    const GROQ_KEY = "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";
 
-    function getTodayArabic() {
-      const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-      return days[new Date().getDay()];
-    }
+    function switchView(id) { document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+    function getToday() { const d = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"]; return d[new Date().getDay()]; }
 
-    function switchView(viewId) {
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.getElementById(viewId).classList.add('active');
-      window.scrollTo(0,0);
-    }
-
-    // AI Logic
-    async function fetchGroq(messages) {
+    async function fetchGroq(msgs) {
       try {
-        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST", headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: messages, temperature: 0.7 })
-        });
-        const data = await res.json();
-        return data.choices[0].message.content;
-      } catch(e) { return "عذراً.. تعذر الوصول للمدرب الآن."; }
+        const r = await fetch("https://api.groq.com/openai/v1/chat/completions", { method: "POST", headers: { "Authorization": `Bearer ${GROQ_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: msgs }) });
+        const d = await r.json(); return d.choices[0].message.content;
+      } catch(e) { return "المدرب غير متاح حالياً."; }
     }
 
-    // App Initialization
-    function initApp() {
-      const saved = localStorage.getItem('abuAliSchedules');
-      if(saved) Object.assign(excelFallbackData, JSON.parse(saved));
+    function init() {
+      // Admin Check
+      if(window.location.pathname === '/admin' || window.location.search === '?admin=true') {
+        const p = prompt("كلمة مرور الإدارة:");
+        if(p === ADMIN_PASS) { refreshEdit(getToday()); switchView('edit-view'); } 
+        else { alert("خطأ!"); window.location.href='/'; return; }
+      }
+
+      const s = sessionStorage.getItem('aliSess');
+      if(s) { isLoggedIn = true; currentUser = JSON.parse(s); }
       
-      const today = getTodayArabic();
-      currentDayExercises = JSON.parse(JSON.stringify(excelFallbackData[today] || []));
-      
+      const localSchedules = localStorage.getItem('abuAliSchedules');
+      if(localSchedules) HUSSAIN_DATA = JSON.parse(localSchedules);
+
+      const today = getToday();
       document.getElementById('todayNameSpan').textContent = today;
-      document.getElementById('todayExCount').textContent = currentDayExercises.length;
+      
+      if(isLoggedIn) {
+        curDayExt = JSON.parse(JSON.stringify(HUSSAIN_DATA[today] || []));
+        document.getElementById('todayExCount').textContent = curDayExt.length;
+        document.getElementById('dashboardMessage').textContent = `أهلاً بك يا ${currentUser.name}! جدولك جاهز للتحطيم.`;
+        document.getElementById('logoutBtn').style.display = 'block';
+        document.getElementById('profileGreeting').textContent = `أهلاً يا وحش ${currentUser.name}!`;
+      } else {
+        curDayExt = [];
+        document.getElementById('todayExCount').textContent = "0";
+        document.getElementById('dashboardMessage').innerHTML = "<span style='color:var(--primary-color)'>سجل دخولك لمشاهدة تمارينك الخاصة، أو اطلب من المدرب الآلي إنشاء جدولك من هنا!</span>";
+      }
 
-      // Event Listeners
-      document.getElementById('startWorkoutBtn').onclick = () => { currentExerciseIndex = 0; updateExerciseView(); switchView('workout-view'); };
-      document.getElementById('goToEditBtn').onclick = () => { refreshEditList(getTodayArabic()); switchView('edit-view'); };
+      // Handlers
       document.getElementById('homeBtn').onclick = () => switchView('home-view');
-      document.getElementById('profileBtn').onclick = () => { loadProfileData(); switchView('profile-view'); };
+      document.getElementById('profileBtn').onclick = () => switchView('profile-view');
       document.getElementById('chatBtn').onclick = () => switchView('chat-view');
-      document.getElementById('saveEditBtn').onclick = saveEditedExercises;
-      document.getElementById('addExerciseBtn').onclick = () => addExerciseRowHTML();
-      document.getElementById('nextExerciseBtn').onclick = nextExercise;
-      document.getElementById('finishBtn').onclick = () => switchView('home-view');
-      document.getElementById('startTimerBtn').onclick = toggleTimer;
-      document.getElementById('resetTimerBtn').onclick = resetTimer;
-      document.getElementById('saveProfileBtn').onclick = saveProfileData;
-      document.getElementById('resetAppBtn').onclick = resetAllData;
-      document.getElementById('sendChatBtn').onclick = sendChatMessage;
-      document.getElementById('aiGenerateBtn').onclick = generateWorkoutByAI;
-      document.getElementById('uploadExcelBtn').onclick = () => document.getElementById('excelUpload').click();
-      document.getElementById('excelUpload').onchange = handleExcelUpload;
-      document.getElementById('editDaySelector').onchange = (e) => refreshEditList(e.target.value);
+      document.getElementById('startWorkoutBtn').onclick = () => { if(curDayExt.length===0){alert("سجل دخولك أولاً!");return;} curExIdx=0; updateEx(); switchView('workout-view'); };
+      document.getElementById('goToEditBtn').onclick = () => { if(!isLoggedIn) switchView('login-view'); else { refreshEdit(getToday()); switchView('edit-view'); } };
+      document.getElementById('doLoginBtn').onclick = login;
+      document.getElementById('logoutBtn').onclick = () => { sessionStorage.removeItem('aliSess'); location.reload(); };
+      document.getElementById('nextExBtn').onclick = () => { if(curExIdx < curDayExt.length-1){ curExIdx++; updateEx(); } else { alert("كفيت ووفيت!"); switchView('home-view'); } };
+      document.getElementById('sendChatBtn').onclick = sendChat;
+      document.getElementById('aiGenBtn').onclick = triggerAI;
+      document.getElementById('addExBtn').onclick = () => addEditRow();
+      document.getElementById('saveEditBtn').onclick = saveEdit;
+      document.getElementById('daySelect').onchange = (e) => refreshEdit(e.target.value);
     }
 
-    function updateExerciseView() {
-      const ex = currentDayExercises[currentExerciseIndex];
-      document.getElementById('progressBar').style.width = `${(currentExerciseIndex / currentDayExercises.length) * 100}%`;
-      document.getElementById('exerciseNumber').textContent = `تمرين ${currentExerciseIndex+1} / ${currentDayExercises.length}`;
-      document.getElementById('exerciseTitle').textContent = ex.name;
-      document.getElementById('exerciseReps').textContent = ex.reps;
-      document.getElementById('exerciseDesc').textContent = ex.desc;
+    function login() {
+      const e = document.getElementById('loginEmail').value, p = document.getElementById('loginPass').value;
+      const u = USERS.find(x => x.email === e && x.pass === p);
+      if(u) { sessionStorage.setItem('aliSess', JSON.stringify(u)); location.reload(); }
+      else document.getElementById('loginError').style.display='block';
+    }
+
+    function updateEx() {
+      const x = curDayExt[curExIdx];
+      document.getElementById('exNum').textContent = `تمرين ${curExIdx+1} من ${curDayExt.length}`;
+      document.getElementById('exTitle').textContent = x.name;
+      document.getElementById('exReps').textContent = x.reps;
+      document.getElementById('exDesc').textContent = x.desc;
+      document.getElementById('exImg').src = `https://raw.githubusercontent.com/7m1118172/photo-render/main/${x.image.replace(/ /g,'%20')}`;
       
-      // Image
-      const imgEl = document.getElementById('exerciseImage');
-      imgEl.src = `https://raw.githubusercontent.com/7m1118172/photo-render/main/${(ex.image || ex.name + '.png').split(' ').join('%20')}`;
-      imgEl.onerror = () => imgEl.src = 'https://via.placeholder.com/200?text=No+Image';
-
-      // AI Analysis
-      const aiBox = document.getElementById('aiAnalysisBox');
-      aiBox.style.display = 'block'; aiBox.innerHTML = 'جاري التحليل...';
-      fetchGroq([{role:"system",content:"أنت مدرب محفز. حلل التمرين باختصار شديد جدا."}, {role:"user",content:ex.name}]).then(res => aiBox.innerHTML = res);
-
-      // Timer
-      clearInterval(timerInterval); timerInterval = null;
-      timeLeft = ex.timer ? parseInt(ex.timer) : 0;
-      if(timeLeft > 0) { document.getElementById('timerContainer').style.display='block'; updateTimerDisplay(); } else { document.getElementById('timerContainer').style.display='none'; }
-      
-      document.getElementById('nextExerciseBtn').textContent = currentExerciseIndex === currentDayExercises.length-1 ? 'إنهاء الجدول 🏁' : 'التمرين التالي ⬅️';
+      const coach = document.getElementById('aiCoachBox'); 
+      coach.innerHTML = "جاري التحفيز...";
+      fetchGroq([{role:"system",content:"كن محفزاً ومختصراً جداً!"},{role:"user",content:x.name}]).then(r => coach.innerHTML = r);
     }
 
-    function nextExercise() {
-      if(currentExerciseIndex < currentDayExercises.length-1) { currentExerciseIndex++; updateExerciseView(); }
-      else { buildFinishSummary(); switchView('finished-view'); }
+    let history = [{role:"system", content:`أنت مدرب وحش وحماسي. اسأل اللاعب أولاً عن وزنه الحالي وهدفه. اقترح تمارين من هذه القائمة فقط: [${OFFICIAL_EXERCISES.join(', ')}]. ممنوع اقتراح أي تمرين خارجها.`}];
+    async function sendChat() {
+      const i = document.getElementById('chatInput'), m = i.value; if(!m) return;
+      document.getElementById('chatMessages').innerHTML += `<div class="message user">${m}</div>`; i.value='';
+      const r = await fetchGroq([...history, {role:"user", content:m}]);
+      document.getElementById('chatMessages').innerHTML += `<div class="message ai">${r}</div>`;
+      history.push({role:"user",content:m},{role:"assistant",content:r});
+      document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
     }
 
-    function buildFinishSummary() {
-      const tbody = document.getElementById('summaryTableBody'); tbody.innerHTML = '';
-      currentDayExercises.forEach(ex => { tbody.innerHTML += `<tr><td>${ex.name}</td><td>${ex.reps || ex.timer + 'ث'}</td></tr>`; });
-      document.getElementById('calorieEstimation').textContent = `🔥 حرقنا حوالي ${currentDayExercises.length * 35} سعرة!`;
+    async function triggerAI() {
+      const r = await fetchGroq([...history, {role:"user", content:"الآن اقترح لي جدولاً من 5 تمارين من قائمتك المعتمدة بناءً على رغبتي."}]);
+      document.getElementById('chatMessages').innerHTML += `<div class="message ai">إليك الجدول المقترح (من القائمة الرسمية):<br>${r.replace(/\n/g,'<br>')}</div>`;
     }
 
-    function toggleTimer() {
-      if(timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-      else { timerInterval = setInterval(() => { timeLeft--; updateTimerDisplay(); if(timeLeft<=0){ clearInterval(timerInterval); document.getElementById('timerAudio').play(); alert("انتهى الوقت!"); } }, 1000); }
+    function refreshEdit(day) {
+      const l = document.getElementById('editList'); l.innerHTML = '';
+      (HUSSAIN_DATA[day] || []).forEach(x => addEditRow(x));
     }
-    function updateTimerDisplay() { const m=Math.floor(timeLeft/60), s=timeLeft%60; document.getElementById('timerDisplay').textContent=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
-    function resetTimer() { clearInterval(timerInterval); timerInterval=null; timeLeft=currentDayExercises[currentExerciseIndex].timer; updateTimerDisplay(); }
-
-    function refreshEditList(day) {
-      const list = document.getElementById('editList'); list.innerHTML = '';
-      (excelFallbackData[day] || []).forEach(ex => addExerciseRowHTML(ex));
+    function addEditRow(x={name:'',reps:'',timer:0,desc:'',image:''}) {
+      const d = document.createElement('div'); d.className='edit-item';
+      d.innerHTML = `<input class="en" value="${x.name}" placeholder="الاسم"><input class="er" value="${x.reps}" placeholder="التكرار"><input class="ei" value="${x.image}" placeholder="اسم الصورة .png"><textarea class="ed">${x.desc}</textarea><button onclick="this.parentElement.remove()" style="color:red; background:none; border:none; margin-top:5px; cursor:pointer;">حذف</button>`;
+      document.getElementById('editList').appendChild(d);
     }
-    function addExerciseRowHTML(ex={name:'',reps:'',desc:'',timer:0}) {
-      const div = document.createElement('div'); div.className='edit-item';
-      div.innerHTML = `<input type="text" value="${ex.name}" class="en" placeholder="الاسم"><input type="text" value="${ex.reps}" class="er" placeholder="التكرار"><input type="number" value="${ex.timer}" class="et" placeholder="الوقت"><textarea class="ed">${ex.desc}</textarea><button onclick="this.parentElement.remove()" style="color:#ef4444; background:none; border:none; cursor:pointer; font-size:0.7rem;">حذف</button>`;
-      document.getElementById('editList').appendChild(div);
-    }
-    function saveEditedExercises() {
-      const day = document.getElementById('editDaySelector').value, list = [];
-      document.querySelectorAll('.edit-item').forEach(item => { list.push({name:item.querySelector('.en').value, reps:item.querySelector('.er').value, timer:item.querySelector('.et').value, desc:item.querySelector('.ed').value}); });
-      excelFallbackData[day] = list; localStorage.setItem('abuAliSchedules', JSON.stringify(excelFallbackData)); alert("تم الحفظ!");
+    function saveEdit() {
+      const d = document.getElementById('daySelect').value, res = [];
+      document.querySelectorAll('.edit-item').forEach(v => { res.push({name:v.querySelector('.en').value, reps:v.querySelector('.er').value, image:v.querySelector('.ei').value, desc:v.querySelector('.ed').value}); });
+      HUSSAIN_DATA[d] = res; localStorage.setItem('abuAliSchedules', JSON.stringify(HUSSAIN_DATA)); alert("تم الحفظ!");
     }
 
-    function saveProfileData() { localStorage.setItem('abuAliProfile', JSON.stringify({w:document.getElementById('userWeight').value, t:document.getElementById('targetWeight').value})); alert("تم!"); }
-    function loadProfileData() { const d=JSON.parse(localStorage.getItem('abuAliProfile')); if(d){ document.getElementById('userWeight').value=d.w; document.getElementById('targetWeight').value=d.t; } }
-    function resetAllData() { if(confirm("حذف كل شيء؟")){ localStorage.clear(); location.reload(); } }
-
-    async function sendChatMessage() {
-      const input = document.getElementById('chatInput'), msg = input.value; if(!msg) return;
-      document.getElementById('chatMessages').innerHTML += `<div class="message user">${msg}</div>`; input.value='';
-      const res = await fetchGroq([{role:"system",content:"أنت مدرب مشجع جدا."}, {role:"user",content:msg}]);
-      document.getElementById('chatMessages').innerHTML += `<div class="message ai">${res}</div>`;
-    }
-    async function generateWorkoutByAI() {
-      const res = await fetchGroq([{role:"user",content:"اقترح لي 4 تمارين سريعة للبيت بأسطر واضحة."}]);
-      document.getElementById('chatMessages').innerHTML += `<div class="message ai">اقتراحاتي:<br>${res.replace(/\n/g,'<br>')}</div>`;
-    }
-
-    function handleExcelUpload(e) {
-      const reader = new FileReader(); reader.onload = (ev) => {
-        const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
-        const data = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); const temp = {};
-        data.forEach(r => { const d=r["اليوم"]; if(!temp[d]) temp[d]=[]; temp[d].push({name:r["التمرين"], desc:r["الوصف"]||"", reps:r["التكرار"]||"", timer:r["الوقت"]||0}); });
-        Object.assign(excelFallbackData, temp); localStorage.setItem('abuAliSchedules', JSON.stringify(excelFallbackData)); location.reload();
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
-    }
-
-    window.onload = initApp;
+    window.onload = init;
   </script>
 </body>
 </html>
